@@ -36,11 +36,17 @@
 </div>
 
 <div class="container">
-    <label>
-        <select class="card">
-            <option th:each="cat: ${categories}" th:text="${cat.name}">Category Title</option>
+    <div class="filter">
+        <label for="categories">Category</label>
+        <select name="categories" id="categories" class="card">
+            <option th:each="cat: ${categories}" th:text="${cat.name}" th:data-id="${cat.id}"></option>
         </select>
-    </label>
+        <label for="suppliers">Supplier</label>
+        <select name="suppliers" id="suppliers" class="card">
+            <option th:each="sup: ${suppliers}" th:text="${sup.name}" th:data-id="${sup.id}"></option>
+        </select>
+
+    </div>
 
     <div id="products" class="row">
         <div class="product col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
