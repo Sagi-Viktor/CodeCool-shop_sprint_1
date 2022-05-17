@@ -25,5 +25,24 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String firstName = req.getParameter("first-name");
+        String lastName = req.getParameter("last-name");
+        String email = req.getParameter("email");
+
+        String country = req.getParameter("country");
+        String zipCode = req.getParameter("cityCode");
+        String street = req.getParameter("street");
+        String houseNumber = req.getParameter("house-number");
+
+        String checkBoxForDifferentAddress = req.getParameter("same-address");
+        if (!checkBoxForDifferentAddress.equals("on")){
+            String billingCountry = req.getParameter("billing-country");
+            String billingZipCode = req.getParameter("cityCode");
+            String billingStreet = req.getParameter("street");
+            String bullingHouseNumber = req.getParameter("house-number");
+        }
+
+        String paymentType = req.getParameter("payment-type");
+
     }
 }
