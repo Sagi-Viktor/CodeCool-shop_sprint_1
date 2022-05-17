@@ -5,11 +5,15 @@ import java.util.List;
 
 public class ProductCategory extends BaseModel {
     private String department;
+    private final String description;
+    private final List<Integer> supplierIds;
     private List<Product> products;
 
-    public ProductCategory(String name, String department, String description) {
+    public ProductCategory(String name, String department, String description, Integer... supplierIds) {
         super(name);
         this.department = department;
+        this.description = description;
+        this.supplierIds = List.of(supplierIds);
         this.products = new ArrayList<>();
     }
 
