@@ -1,4 +1,7 @@
 export const dataHandler = {
+    addProductToCart: async function (product) {
+        await apiPost("/api/add-to-cart", product);
+    }
 
 }
 
