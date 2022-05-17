@@ -8,6 +8,7 @@ function main() {
     console.log("indexCart.js");
 }
 
-function addProductToCart(event) {
-    console.log(event);
+async function addProductToCart(event) {
+    const productId = event.currentTarget.getAttribute("data-id");
+    await dataHandler.addProductToCart(productId);
 }
