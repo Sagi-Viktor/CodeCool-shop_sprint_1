@@ -1,5 +1,15 @@
 package com.codecool.shop.controller.api;
 
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
+import com.codecool.shop.service.ProductService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +26,21 @@ public class GetProducts extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
+
         List<Integer> supplerIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
+        List<ProductCategory> productCategories =  categoryIds.stream()
+                .map(productService::getProductCategory)
+                .collect(Collectors.toList());
+        List<Supplier> suppliers = supplerIds.stream()
+                .map(productService::getSupplierCategory)
+                .collect(Collectors.toList());
+
+        System.out.printf("sup: %s, cat: %s%n", supplerIds, categoryIds);
     }
 
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
