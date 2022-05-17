@@ -38,6 +38,19 @@ public class ProductCategory extends BaseModel {
     }
 
     @Override
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Integer> getSupplierIds() {
+        return List.copyOf(supplierIds);
+    }
+
+    public boolean hasSupplier(int supplierId) {
+        return supplierIds.contains(supplierId);
+    }
+
+    @Override
     public String toString() {
         return String.format(
                 "id: %1$d," +
