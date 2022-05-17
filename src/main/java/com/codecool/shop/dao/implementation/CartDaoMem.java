@@ -29,6 +29,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public Map<Product, Integer> getAll() {
-        return null;
+        // TODO Think about encapsulation
+        return data;
     }
 }
