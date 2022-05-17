@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CartDaoMem implements CartDao {
 
-    private Map<Product, Integer> data = new HashMap<>();
+    private final Map<Product, Integer> data = new HashMap<>();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
@@ -24,7 +24,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void add(Product product, Integer quantity) {
-
+        data.put(product, quantity);
     }
 
     @Override
