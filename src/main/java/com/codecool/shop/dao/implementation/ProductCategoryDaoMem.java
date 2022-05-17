@@ -6,10 +6,11 @@ import com.codecool.shop.model.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductCategoryDaoMem implements ProductCategoryDao {
 
-    private List<ProductCategory> data = new ArrayList<>();
+    private final List<ProductCategory> data = new ArrayList<>();
     private static ProductCategoryDaoMem instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
@@ -48,5 +49,10 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     @Override
     public List<ProductCategory> getAll() {
         return data;
+    }
+
+    @Override
+    public List<ProductCategory> getBySupplierId(int supplierId) {
+        return data.stream().filter(productCategory -> productCategory.hasSupplier(supplierId)).collect(Collectors.toList());
     }
 }
