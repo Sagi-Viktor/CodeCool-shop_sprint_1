@@ -11,8 +11,8 @@ export const dataHandler = {
     editCart: async function (productId, quantity) {
         return await apiPost("/api/edit-cart",
             {
-                "productId": productId,
-                "quantity": quantity
+                "productId": parseInt(productId),
+                "quantity": parseInt(quantity)
             }, true);
     }
 };
