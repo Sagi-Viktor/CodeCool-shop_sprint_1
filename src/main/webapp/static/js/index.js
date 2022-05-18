@@ -16,12 +16,12 @@ function addEventListeners() {
 }
 
 function getSelectedIds(checkBoxList) {
-    let ids = []
+    let idList = []
     checkBoxList.querySelectorAll("li input")
         .forEach(checkBox => {
-            if (checkBox.checked) ids.push(checkBox.getAttribute(attributes.id))
+            if (checkBox.checked) idList.push(checkBox.getAttribute(attributes.id))
         });
-    return ids;
+    return idList;
 }
 
 async function refreshProducts() {
@@ -30,7 +30,36 @@ async function refreshProducts() {
     supplierId = getSelectedIds(htmlElements.suppliers);
     categoryId = getSelectedIds(htmlElements.categories);
     const refreshedProducts = await dataHandler.getProducts(supplierId, categoryId);
-    console.log(refreshedProducts);
+    changeProducts(refreshedProducts);
 }
+
+function createProductElement(product) {
+    return `<div class="col col-sm-12 col-md-6 col-lg-4">
+            <div class="card">
+                <img class="" src='/static/img/product_${product.id}.jpg' alt=""/>
+                <div class="card-header">
+                    <h4 class="card-title">${product.name}</h4>
+                    <p class="card-text">${product.description}</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
+                    </div>
+                    <div class="card-text">
+                        <a class="btn btn-success" href="#">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+}
+
+function changeProducts(products) {
+    htmlElements.productContainer.innerHTML = "";
+    for (const product of products.productsByFilter) {
+        const element = createProductElement(product)
+        htmlElements.productContainer.insertAdjacentHTML("beforeend", element)
+    }
+}
+
 
 addEventListeners();
