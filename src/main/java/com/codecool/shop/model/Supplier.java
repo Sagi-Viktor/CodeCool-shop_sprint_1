@@ -37,6 +37,10 @@ public class Supplier extends BaseModel {
         return productCategoryIds.size();
     }
 
+    public List<Integer> getProductCategoryIds() {
+        return productCategoryIds;
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
