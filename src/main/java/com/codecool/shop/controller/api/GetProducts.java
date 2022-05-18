@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ProductService;
@@ -40,7 +41,11 @@ public class GetProducts extends HttpServlet {
                 .map(productService::getSupplierCategory)
                 .collect(Collectors.toList());
 
-        System.out.printf("sup: %s, cat: %s%n", supplerIds, categoryIds);
+    private List<Product> getProductsBySuppliers(List<Supplier> suppliers) {
+        return suppliers.stream()
+                .map(Supplier::getProducts)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
