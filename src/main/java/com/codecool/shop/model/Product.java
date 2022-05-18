@@ -65,12 +65,14 @@ public class Product extends BaseModel {
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
-                        "defaultPrice: %3$f, " +
-                        "defaultCurrency: %4$s, " +
-                        "productCategory: %5$s, " +
-                        "supplier: %6$s",
+                        "description: %3$s" +
+                        "defaultPrice: %4$f, " +
+                        "defaultCurrency: %5$s, " +
+                        "productCategory: %6$s, " +
+                        "supplier: %7$s",
                 this.id,
                 this.name,
+                this.description,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
