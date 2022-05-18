@@ -11,8 +11,9 @@ const htmlElements = {
 
 function addEventListeners() {
     htmlElements.categories.querySelectorAll("input").forEach(
-        (inp) => inp.addEventListener("click", refreshProducts));
-    htmlElements.suppliers.addEventListener("click", refreshProducts);
+        (checkbox) => checkbox.addEventListener("click", refreshProducts));
+    htmlElements.suppliers.querySelectorAll("input").forEach(
+        (checkbox) => checkbox.addEventListener("click", refreshProducts));
 
 }
 
@@ -20,19 +21,29 @@ function getSelectedIds(checkBoxList) {
     let idList = []
     checkBoxList.querySelectorAll("li input")
         .forEach(checkBox => {
-            if (checkBox.checked) idList.push(checkBox.getAttribute(attributes.id))
+            if (checkBox.checked) {
+                idList.push(checkBox.getAttribute(attributes.id));
+                checkBox.setAttribute("data-checked", "true");
+            } else {
+                checkBox.setAttribute("data-checked", "false");
+            }
         });
     return idList;
 }
 
-function changeCheckboxAvailability(availableProductCategories) {
+function changeCheckboxAvailability(numberOfProductsInCategories) {
     disableAllCategoryCheckbox();
-    htmlElements.categories.querySelectorAll("input").forEach(inp => {
-        availableProductCategories.forEach(availableCategoryValue => {
-            if (inp.disabled === true && availableCategoryValue === +inp.value) {
-                inp.disabled = false;
+    htmlElements.categories.querySelectorAll("label.checkbox-label").forEach(checkboxLabel => {
+        let checkbox = checkboxLabel.children.namedItem("category-filter");
+        let numberOfProducts = checkboxLabel.querySelector("em.actual-product-number");
+        for (let [categoryValue, numberOfAvailableProducts] of Object.entries(numberOfProductsInCategories)) {
+            if (checkbox.disabled === true && categoryValue === checkbox.value) {
+                checkbox.disabled = false;
+                numberOfProducts.innerHTML = numberOfAvailableProducts;
             }
-        })
+        }
+        if (checkbox.disabled) {numberOfProducts.innerHTML = '0';}
+        if (checkbox.getAttribute("data-checked") === "true" && checkbox.disabled) {checkbox.checked = false;}
     });
 }
 
@@ -44,8 +55,9 @@ async function refreshProducts() {
     let supplierIdList = getSelectedIds(htmlElements.suppliers);
     let categoryIdList = getSelectedIds(htmlElements.categories);
     const refreshedProducts = await dataHandler.getProducts(supplierIdList, categoryIdList);
-    changeCheckboxAvailability(refreshedProducts.availableProductCategories);
+    changeCheckboxAvailability(refreshedProducts.numberOfProductsInCategories);
     changeProducts(refreshedProducts.productsByFilter);
+    console.log(refreshedProducts);
 }
 
 function createProductElement(product) {
