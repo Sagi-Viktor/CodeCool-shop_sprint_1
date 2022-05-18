@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -30,19 +32,41 @@ public class CheckoutController extends HttpServlet {
         String email = req.getParameter("email");
 
         String country = req.getParameter("country");
-        String zipCode = req.getParameter("cityCode");
+        String state = req.getParameter("state");
+        String zipCode = req.getParameter("city-code");
         String street = req.getParameter("street");
         String houseNumber = req.getParameter("house-number");
 
-        String checkBoxForDifferentAddress = req.getParameter("same-address");
-        if (!checkBoxForDifferentAddress.equals("on")){
+        String paymentType = req.getParameter("payment");
+
+        ArrayList<String> orderDetails = new ArrayList<>();
+
+        orderDetails.add(firstName);
+        orderDetails.add(lastName);
+        orderDetails.add(email);
+        orderDetails.add(country);
+        orderDetails.add(state);
+        orderDetails.add(zipCode);
+        orderDetails.add(street);
+        orderDetails.add(houseNumber);
+        orderDetails.add(paymentType);
+
+        Optional<String> checkBoxForDifferentAddress = Optional.ofNullable(req.getParameter("same-address"));
+        if (checkBoxForDifferentAddress.isEmpty()) {
             String billingCountry = req.getParameter("billing-country");
-            String billingZipCode = req.getParameter("cityCode");
-            String billingStreet = req.getParameter("street");
-            String bullingHouseNumber = req.getParameter("house-number");
+            String billingState = req.getParameter("billing-state");
+            String billingZipCode = req.getParameter("billing-city-code");
+            String billingStreet = req.getParameter("billing-street");
+            String bullingHouseNumber = req.getParameter("billing-house-number");
+
+            orderDetails.add(billingCountry);
+            orderDetails.add(billingState);
+            orderDetails.add(billingZipCode);
+            orderDetails.add(billingStreet);
+            orderDetails.add(bullingHouseNumber);
         }
 
-        String paymentType = req.getParameter("payment-type");
+        //TODO create new OrderModel with orderDetails list
 
     }
 }
