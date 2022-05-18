@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Supplier extends BaseModel {
     private List<Product> products;
+    private List<Integer> productCategoryIds;
 
     public Supplier(String name, String description) {
         super(name);
         this.products = new ArrayList<>();
+        this.productCategoryIds = new ArrayList<>();
     }
 
     public void setProducts(ArrayList<Product> products) {
@@ -19,8 +21,20 @@ public class Supplier extends BaseModel {
         return List.copyOf(products);
     }
 
+    public int getNumberOfProducts() {
+        return products.size();
+    }
+
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+
+    public void addProductCategory(int productCategoryId) {
+        productCategoryIds.add(productCategoryId);
+    }
+
+    public int getNumberOfProductCategories() {
+        return productCategoryIds.size();
     }
 
     @Override
