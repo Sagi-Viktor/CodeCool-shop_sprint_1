@@ -20,10 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "getSelectedProducts", urlPatterns = {"/api/products"}, loadOnStartup = 2)
@@ -41,7 +38,7 @@ public class GetProducts extends HttpServlet {
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
         List<ProductCategory> productCategories = productService.getProductCategories(categoryIds);
         List<Supplier> suppliers = productService.getSuppliers(supplierIds);
-        List<Integer> availableCategories = productService.getAvailableCategories(suppliers);
+        Set<Integer> availableCategories = productService.getAvailableCategories(suppliers);
         List<Product> products = (!productCategories.isEmpty()) ? productService.getProductsByCategories(productCategories) : productService.getProductsBySuppliers(suppliers);
         GetProductsModel getProductsModel = new GetProductsModel(availableCategories, products);
         out.println(new Gson().toJson(getProductsModel));

@@ -9,6 +9,7 @@ import com.codecool.shop.model.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -57,11 +58,11 @@ public class ProductService {
         return supplierDao.find(id);
     }
 
-    public List<Integer> getAvailableCategories(List<Supplier> suppliers) {
+    public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
         return suppliers.stream()
                 .map(Supplier::getProductCategoryIds)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public List<ProductCategory> getProductCategories(List<Integer> categoryIds) {
