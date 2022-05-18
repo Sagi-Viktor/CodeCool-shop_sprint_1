@@ -2,11 +2,14 @@ export const dataHandler = {
     addProductToCart: async function (productId) {
         await apiPost("/api/add-to-cart", productId);
     },
-
     getProducts: async function(supplierId, categoryId) {
         return await apiGet(`api/products${createQueryParams(supplierId, categoryId)}`)
     },
-}
+    getItemsFromCart: async function () {
+        return await apiGet("/api/cart-items");
+    }
+};
+
 
 function createQueryParams(supplierId, categoryId) {
     let query = "";
