@@ -35,6 +35,17 @@ public class ProductService {
         return productCategoryDao.find(categoryName);
     }
 
+    public int countAvailableProducts(int categoryId, List<Supplier> selectedSuppliers) {
+        int numberOfProducts = 0;
+        for (Supplier supplier : selectedSuppliers) {
+            numberOfProducts += supplier.getProducts().stream()
+                    .map(Product::getProductCategory)
+                    .filter(productCategory -> productCategory.getId() == categoryId)
+                    .count();
+        }
+        return numberOfProducts;
+    }
+
     public List<ProductCategory> getProductCategoryBySupplier(int supplierId) {
         return productCategoryDao.getBySupplierId(supplierId);
     }
