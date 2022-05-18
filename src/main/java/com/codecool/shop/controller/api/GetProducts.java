@@ -8,7 +8,6 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.GetProductsModel;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
@@ -37,15 +36,16 @@ public class GetProducts extends HttpServlet {
         List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
 
-        List<ProductCategory> selectedCategories = productService.getProductCategories(categoryIds);
         List<Supplier> selectedSuppliers = productService.getSuppliers(supplierIds);
         Set<Integer> availableCategories = productService.getAvailableCategories(selectedSuppliers);
-        List<Product> products = (!selectedCategories.isEmpty()) ? productService.getProductsByCategories(selectedCategories) : productService.getProductsBySuppliers(selectedSuppliers);
+        List<Product> products = productService.getProductsByFilter(categoryIds, selectedSuppliers);
+        HashMap<Integer, Integer> numberOfProductsInAvailableCategories = new HashMap<>();
+        availableCategories.forEach(category ->
+                numberOfProductsInAvailableCategories.put(category, productService.countAvailableProducts(category, selectedSuppliers)));
 
-        GetProductsModel getProductsModel = new GetProductsModel(availableCategories, products);
+        GetProductsModel getProductsModel = new GetProductsModel(products, numberOfProductsInAvailableCategories);
         out.println(new Gson().toJson(getProductsModel));
     }
-
 
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
         Optional<String> queryParameterValue = Optional.ofNullable(request.getParameter(queryParameter));

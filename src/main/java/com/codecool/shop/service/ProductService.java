@@ -102,10 +102,11 @@ public class ProductService {
                 });
     }
 
-    public List<Product> getProductsByCategories(List<ProductCategory> productCategories) {
+    private List<Product> getProductsByCategoriesAndSuppliers(List<ProductCategory> productCategories, List<Supplier> selectedSuppliers) {
         return productCategories.stream()
                 .map(productDao::getBy)
                 .flatMap(List::stream)
+                .filter(product -> product.hasSupplier(selectedSuppliers))
                 .collect(Collectors.toList());
     }
 
