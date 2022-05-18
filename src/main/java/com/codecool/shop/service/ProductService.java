@@ -9,7 +9,7 @@ import com.codecool.shop.model.Supplier;
 
 import java.util.List;
 
-public class ProductService{
+public class ProductService {
     private ProductDao productDao;
     private ProductCategoryDao productCategoryDao;
     private SupplierDao supplierDao;

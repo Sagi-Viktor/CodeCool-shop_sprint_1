@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Supplier extends BaseModel {
-    private List<Product> products;
+    transient private List<Product> products;
     private List<Integer> productCategoryIds;
 
     public Supplier(String name, String description) {
-        super(name);
+        super(name, description);
         this.products = new ArrayList<>();
         this.productCategoryIds = new ArrayList<>();
     }
