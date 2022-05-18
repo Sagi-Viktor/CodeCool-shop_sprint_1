@@ -25,6 +25,7 @@ public class AddToCartAPI extends HttpServlet {
         CartDao cart = CartDaoMem.getInstance();
         ProductDao productStore = ProductDaoMem.getInstance();
         Product product = productStore.find(productId);
-        cart.add(product, 1);
+        Integer productQuantity = cart.getQuantityOf(product);
+        cart.add(product, productQuantity + 1);
     }
 }
