@@ -2,6 +2,7 @@ package com.codecool.shop.model;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 
 public class Product extends BaseModel {
 
@@ -95,5 +96,10 @@ public class Product extends BaseModel {
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
+    }
+
+    public boolean hasSupplier(List<Supplier> selectedSuppliers) {
+        return selectedSuppliers.stream()
+                .anyMatch(supplier -> supplier.id == this.supplier.id);
     }
 }
