@@ -10,7 +10,8 @@ const htmlElements = {
 }
 
 function addEventListeners() {
-    htmlElements.categories.addEventListener("click", refreshProducts);
+    htmlElements.categories.querySelectorAll("input").forEach(
+        (inp) => inp.addEventListener("click", refreshProducts));
     htmlElements.suppliers.addEventListener("click", refreshProducts);
 
 }
@@ -24,13 +25,27 @@ function getSelectedIds(checkBoxList) {
     return idList;
 }
 
+function changeCheckboxAvailability(availableProductCategories) {
+    disableAllCategoryCheckbox();
+    htmlElements.categories.querySelectorAll("input").forEach(inp => {
+        availableProductCategories.forEach(availableCategoryValue => {
+            if (inp.disabled === true && availableCategoryValue === +inp.value) {
+                inp.disabled = false;
+            }
+        })
+    });
+}
+
+function disableAllCategoryCheckbox() {
+    htmlElements.categories.querySelectorAll("input").forEach((inp) => inp.disabled = true);
+}
+
 async function refreshProducts() {
-    let supplierId = [];
-    let categoryId = [];
-    supplierId = getSelectedIds(htmlElements.suppliers);
-    categoryId = getSelectedIds(htmlElements.categories);
-    const refreshedProducts = await dataHandler.getProducts(supplierId, categoryId);
-    changeProducts(refreshedProducts);
+    let supplierIdList = getSelectedIds(htmlElements.suppliers);
+    let categoryIdList = getSelectedIds(htmlElements.categories);
+    const refreshedProducts = await dataHandler.getProducts(supplierIdList, categoryIdList);
+    changeCheckboxAvailability(refreshedProducts.availableProductCategories);
+    changeProducts(refreshedProducts.productsByFilter);
 }
 
 function createProductElement(product) {
@@ -39,6 +54,7 @@ function createProductElement(product) {
                 <img class="" src='/static/img/product_${product.id}.jpg' alt=""/>
                 <div class="card-header">
                     <h4 class="card-title">${product.name}</h4>
+                    <p class="card-supplier">${product.supplier.name}</p>
                     <p class="card-text">${product.description}</p>
                 </div>
                 <div class="card-body">
@@ -55,7 +71,7 @@ function createProductElement(product) {
 
 function changeProducts(products) {
     htmlElements.productContainer.innerHTML = "";
-    for (const product of products.productsByFilter) {
+    for (const product of products) {
         const element = createProductElement(product)
         htmlElements.productContainer.insertAdjacentHTML("beforeend", element)
     }
