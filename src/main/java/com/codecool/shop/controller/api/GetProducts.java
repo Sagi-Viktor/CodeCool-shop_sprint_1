@@ -36,10 +36,12 @@ public class GetProducts extends HttpServlet {
 
         List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
-        List<ProductCategory> productCategories = productService.getProductCategories(categoryIds);
-        List<Supplier> suppliers = productService.getSuppliers(supplierIds);
-        Set<Integer> availableCategories = productService.getAvailableCategories(suppliers);
-        List<Product> products = (!productCategories.isEmpty()) ? productService.getProductsByCategories(productCategories) : productService.getProductsBySuppliers(suppliers);
+
+        List<ProductCategory> selectedCategories = productService.getProductCategories(categoryIds);
+        List<Supplier> selectedSuppliers = productService.getSuppliers(supplierIds);
+        Set<Integer> availableCategories = productService.getAvailableCategories(selectedSuppliers);
+        List<Product> products = (!selectedCategories.isEmpty()) ? productService.getProductsByCategories(selectedCategories) : productService.getProductsBySuppliers(selectedSuppliers);
+
         GetProductsModel getProductsModel = new GetProductsModel(availableCategories, products);
         out.println(new Gson().toJson(getProductsModel));
     }
