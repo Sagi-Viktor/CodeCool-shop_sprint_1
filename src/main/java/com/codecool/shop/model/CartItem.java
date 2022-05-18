@@ -26,6 +26,10 @@ public class CartItem {
         quantity--;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public int getProductId() {
         return this.product.getId();
     }
