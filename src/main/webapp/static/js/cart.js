@@ -40,7 +40,7 @@ function createCartItemsDiv(cartItems) {
             ${createQuantitySelect(product["id"], cartItem["quantity"])}
     </div>
         `;
-        totalPrice += parseInt(product["defaultPrice"]) * parseInt(cartItem["quantity"]);
+        totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
     }
     return `${cartItemsDiv}
     <p>Total price: ${totalPrice} ${currency}</p>
