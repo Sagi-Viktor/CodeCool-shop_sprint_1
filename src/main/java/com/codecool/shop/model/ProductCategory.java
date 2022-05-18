@@ -33,6 +33,10 @@ public class ProductCategory extends BaseModel {
         return this.products;
     }
 
+    public int getNumberOfProducts() {
+        return products.size();
+    }
+
     public void addProduct(Product product) {
         this.products.add(product);
     }
