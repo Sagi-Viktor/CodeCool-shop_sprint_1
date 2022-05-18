@@ -7,6 +7,13 @@ export const dataHandler = {
     },
     getItemsFromCart: async function () {
         return await apiGet("/api/cart-items");
+    },
+    editCart: async function (productId, quantity) {
+        return await apiPost("/api/edit-cart",
+            {
+                "productId": productId,
+                "quantity": quantity
+            }, true);
     }
 };
 
