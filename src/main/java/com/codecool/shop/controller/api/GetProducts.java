@@ -36,8 +36,18 @@ public class GetProducts extends HttpServlet {
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
         List<ProductCategory> productCategories = getProductCategories(productService, categoryIds);
         List<Supplier> suppliers = getSuppliers(productService, supplierIds);
+        List<Integer> availableCategories = getAvailableCategories(productService, suppliers);
         List<Product> products = (!productCategories.isEmpty()) ? getProductsByCategories(productDataStore, productCategories) : getProductsBySuppliers(suppliers);
-        System.out.printf("suppliers: %s, categories: %s%n products: %s%n", suppliers, productCategories, products);
+
+
+        System.out.printf("suppliers: %s, categories: %s%n products: %s%n Available categories: %s%n", suppliers, productCategories, products, availableCategories);
+    }
+
+    private List<Integer> getAvailableCategories(ProductService productService, List<Supplier> suppliers) {
+        return suppliers.stream()
+                .map(Supplier::getProductCategoryIds)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
     private List<ProductCategory> getProductCategories(ProductService productService, List<Integer> categoryIds) {
