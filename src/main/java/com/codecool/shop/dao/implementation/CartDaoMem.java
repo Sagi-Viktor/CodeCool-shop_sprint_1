@@ -4,6 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.CartItem;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CartDaoMem implements CartDao {
 
@@ -24,6 +25,11 @@ public class CartDaoMem implements CartDao {
     @Override
     public void add(CartItem cartItem) {
         data.add(cartItem);
+    }
+
+    @Override
+    public void remove(CartItem cartItem) {
+        data.remove(cartItem);
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.Set;
 
 public interface CartDao {
     void add(CartItem cartItem);
+    void remove(CartItem cartItem);
     Set<CartItem> getAll();
     Optional<CartItem> find(int productId);
 }
