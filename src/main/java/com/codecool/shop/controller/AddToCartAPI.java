@@ -4,6 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.model.CartItem;
 import com.codecool.shop.model.Product;
 import com.google.common.io.CharStreams;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = {"/api/add-to-cart"})
 public class AddToCartAPI extends HttpServlet {
@@ -24,8 +26,8 @@ public class AddToCartAPI extends HttpServlet {
 
         CartDao cart = CartDaoMem.getInstance();
         ProductDao productStore = ProductDaoMem.getInstance();
-        Product product = productStore.find(productId);
-        Integer productQuantity = cart.getQuantityOf(product);
-        cart.add(product, productQuantity + 1);
+
+        Optional<CartItem> cartItem = cart.find(productId);
+        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cart.add(new CartItem(productId, 1)));
     }
 }

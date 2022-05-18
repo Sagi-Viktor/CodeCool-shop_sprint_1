@@ -1,15 +1,13 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.CartItem;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CartDaoMem implements CartDao {
 
-    private final Map<Product, Integer> data = new HashMap<>();
+    private final Set<CartItem> data = new HashSet<>();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
@@ -24,18 +22,17 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public void add(Product product, Integer quantity) {
-        data.put(product, quantity);
+    public void add(CartItem cartItem) {
+        data.add(cartItem);
     }
 
     @Override
-    public Map<Product, Integer> getAll() {
-        // TODO Think about encapsulation
+    public Set<CartItem> getAll() {
         return data;
     }
 
     @Override
-    public Integer getQuantityOf(Product product) {
-        return Optional.ofNullable(data.get(product)).orElse(0);
+    public Optional<CartItem> find(int productId) {
+        return data.stream().filter(item -> item.getProductId() == productId).findFirst();
     }
 }

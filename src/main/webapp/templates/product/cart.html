@@ -8,18 +8,9 @@
 </head>
 <body>
 <div id="cart">
-    <div class="cart-item" th:each="item : ${cartItems.keySet()}">
-        <h1 th:text="${item.name}">Hello</h1>
-        <label>Quantity:
-            <select name="item-quantity">
-                <option th:each="number:${#numbers.sequence(1, 10)}"
-                        th:value="${number}"
-                        th:text="${number}"
-                        th:selected="${cartItems.get(item) == number} ? true : false">
-                </option>
-            </select>
-        </label>
-        <p th:text="${cartItems.get(item)}"></p>
+    <div class="cart-item" th:each="item : ${cartItems}">
+        <h1 th:text="${item.productId}">Product Id</h1>
+        <p th:text="${item.quantity}">Product Quantity</p>
     </div>
 </div>
 
