@@ -58,6 +58,11 @@ public class ProductService {
         return supplierDao.find(id);
     }
 
+    public List<Product> getProductsByFilter(List<Integer> categoryIds, List<Supplier> selectedSuppliers) {
+        List<ProductCategory> selectedCategories = getProductCategories(categoryIds);
+        return (!selectedCategories.isEmpty()) ? getProductsByCategoriesAndSuppliers(selectedCategories, selectedSuppliers) : this.getProductsBySuppliers(selectedSuppliers);
+    }
+
     public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
         return suppliers.stream()
                 .map(Supplier::getProductCategoryIds)
