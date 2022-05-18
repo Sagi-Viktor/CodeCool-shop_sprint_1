@@ -5,17 +5,27 @@ import java.util.Currency;
 
 public class Product extends BaseModel {
 
+    private String imageName;
     private BigDecimal defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
 
 
-    public Product(String name, BigDecimal defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    public Product(
+            String name,
+            BigDecimal defaultPrice,
+            String currencyString,
+            String description,
+            ProductCategory productCategory,
+            Supplier supplier,
+            String imageName
+    ) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+        this.setSupplier(supplier);
+        this.setImageName(imageName);
     }
 
     public BigDecimal getDefaultPrice() {
@@ -59,6 +69,14 @@ public class Product extends BaseModel {
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
         this.supplier.addProduct(this);
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     @Override
