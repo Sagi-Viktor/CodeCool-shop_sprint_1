@@ -16,7 +16,7 @@ public class Supplier extends BaseModel {
     }
 
     public List<Product> getProducts() {
-        return this.products;
+        return List.copyOf(products);
     }
 
     public void addProduct(Product product) {
