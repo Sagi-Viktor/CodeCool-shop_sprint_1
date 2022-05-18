@@ -20,6 +20,7 @@ import java.util.Optional;
 public class AddToCartAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO Replace CharStreams
         String requestData = CharStreams.toString(req.getReader());
         requestData = requestData.replaceAll("\"", "");
         int productId = Integer.parseInt(requestData);
