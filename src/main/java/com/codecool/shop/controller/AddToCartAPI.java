@@ -1,5 +1,12 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.model.Product;
+import com.google.common.io.CharStreams;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +18,13 @@ import java.io.IOException;
 public class AddToCartAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req);
+        String requestData = CharStreams.toString(req.getReader());
+        requestData = requestData.replaceAll("\"", "");
+        int productId = Integer.parseInt(requestData);
+
+        CartDao cart = CartDaoMem.getInstance();
+        ProductDao productStore = ProductDaoMem.getInstance();
+        Product product = productStore.find(productId);
+        cart.add(product, 1);
     }
 }
