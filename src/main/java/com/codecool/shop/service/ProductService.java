@@ -23,15 +23,15 @@ public class ProductService {
         this.supplierDao = supplierDao;
     }
 
-    public ProductCategory getProductCategory(int categoryId){
+    public ProductCategory getProductCategory(int categoryId) {
         return productCategoryDao.find(categoryId);
     }
 
-    public List<ProductCategory> getProductCategories(){
+    public List<ProductCategory> getProductCategories() {
         return productCategoryDao.getAll();
     }
 
-    public ProductCategory getProductCategory(String categoryName){
+    public ProductCategory getProductCategory(String categoryName) {
         return productCategoryDao.find(categoryName);
     }
 
@@ -50,14 +50,18 @@ public class ProductService {
         return productCategoryDao.getBySupplierId(supplierId);
     }
 
-    public List<Product> getProductsForCategory(int categoryId){
+    public List<Product> getProductsForCategory(int categoryId) {
         var category = productCategoryDao.find(categoryId);
         return productDao.getBy(category);
     }
 
-    public List<Product> getProductsForCategory(String categoryName){
+    public List<Product> getProductsForCategory(String categoryName) {
         var category = productCategoryDao.find(categoryName);
         return productDao.getBy(category);
+    }
+
+    public List<Product> getAllProducts() {
+        return productDao.getAll();
     }
 
 
@@ -75,10 +79,11 @@ public class ProductService {
     }
 
     public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
-        return suppliers.stream()
-                .map(Supplier::getProductCategoryIds)
-                .flatMap(List::stream)
-                .collect(Collectors.toSet());
+        return suppliers.isEmpty() ? Set.copyOf(productCategoryDao.getAllId()) :
+                suppliers.stream()
+                        .map(Supplier::getProductCategoryIds)
+                        .flatMap(List::stream)
+                        .collect(Collectors.toSet());
     }
 
     public List<ProductCategory> getProductCategories(List<Integer> categoryIds) {
@@ -106,7 +111,7 @@ public class ProductService {
         return productCategories.stream()
                 .map(productDao::getBy)
                 .flatMap(List::stream)
-                .filter(product -> product.hasSupplier(selectedSuppliers))
+                .filter(product -> selectedSuppliers.isEmpty() || product.hasSupplier(selectedSuppliers))
                 .collect(Collectors.toList());
     }
 

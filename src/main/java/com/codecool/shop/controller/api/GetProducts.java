@@ -38,6 +38,7 @@ public class GetProducts extends HttpServlet {
 
         List<Supplier> selectedSuppliers = productService.getSuppliers(supplierIds);
         Set<Integer> availableCategories = productService.getAvailableCategories(selectedSuppliers);
+        if (categoryIds.isEmpty()) categoryIds = List.copyOf(availableCategories);
         List<Product> products = productService.getProductsByFilter(categoryIds, selectedSuppliers);
         HashMap<Integer, Integer> numberOfProductsInAvailableCategories = new HashMap<>();
         availableCategories.forEach(category ->
