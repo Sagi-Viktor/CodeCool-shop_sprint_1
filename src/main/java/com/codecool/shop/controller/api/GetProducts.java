@@ -32,14 +32,25 @@ public class GetProducts extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
 
-        List<Integer> supplerIds = getQueryParamValue(request, "supplier_id");
+        List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
-        List<ProductCategory> productCategories =  categoryIds.stream()
+        List<ProductCategory> productCategories = getProductCategories(productService, categoryIds);
+        List<Supplier> suppliers = getSuppliers(productService, supplierIds);
+        List<Product> products = (!productCategories.isEmpty()) ? getProductsByCategories(productDataStore, productCategories) : getProductsBySuppliers(suppliers);
+        System.out.printf("suppliers: %s, categories: %s%n products: %s%n", suppliers, productCategories, products);
+    }
+
+    private List<ProductCategory> getProductCategories(ProductService productService, List<Integer> categoryIds) {
+        return categoryIds.stream()
                 .map(productService::getProductCategory)
                 .collect(Collectors.toList());
-        List<Supplier> suppliers = supplerIds.stream()
+    }
+
+    private List<Supplier> getSuppliers(ProductService productService, List<Integer> supplierIds) {
+        return supplierIds.stream()
                 .map(productService::getSupplierCategory)
                 .collect(Collectors.toList());
+    }
 
     private List<Product> getProductsBySuppliers(List<Supplier> suppliers) {
         return suppliers.stream()
