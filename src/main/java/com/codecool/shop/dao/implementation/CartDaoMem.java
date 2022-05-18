@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class CartDaoMem implements CartDao {
 
@@ -31,5 +32,10 @@ public class CartDaoMem implements CartDao {
     public Map<Product, Integer> getAll() {
         // TODO Think about encapsulation
         return data;
+    }
+
+    @Override
+    public Integer getQuantityOf(Product product) {
+        return Optional.ofNullable(data.get(product)).orElse(0);
     }
 }
