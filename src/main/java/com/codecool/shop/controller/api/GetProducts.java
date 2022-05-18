@@ -6,10 +6,12 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.GetProductsModel;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ProductService;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +35,7 @@ public class GetProducts extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
+        PrintWriter out = response.getWriter();
 
         List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
@@ -38,9 +43,8 @@ public class GetProducts extends HttpServlet {
         List<Supplier> suppliers = getSuppliers(productService, supplierIds);
         List<Integer> availableCategories = getAvailableCategories(productService, suppliers);
         List<Product> products = (!productCategories.isEmpty()) ? getProductsByCategories(productDataStore, productCategories) : getProductsBySuppliers(suppliers);
-
-
-        System.out.printf("suppliers: %s, categories: %s%n products: %s%n Available categories: %s%n", suppliers, productCategories, products, availableCategories);
+        GetProductsModel getProductsModel = new GetProductsModel(availableCategories, products);
+        out.println(new Gson().toJson(getProductsModel));
     }
 
     private List<Integer> getAvailableCategories(ProductService productService, List<Supplier> suppliers) {
@@ -90,9 +94,9 @@ public class GetProducts extends HttpServlet {
         }
         try {
             Integer.parseInt(str);
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }
-        return true;
     }
 }
