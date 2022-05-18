@@ -58,7 +58,11 @@
                 <li th:each="sup: ${suppliers}">
                     <label>
                         <input type="checkbox" name="supplier-filter" th:value="${sup.id}">
-                        <span th:text="${sup.name}"></span>
+                        <span>
+                            <a th:text="${sup.name}"></a>
+                            <em th:text="${sup.numberOfProductCategories}"></em> |
+                            <em th:text="${sup.numberOfProducts}"></em>
+                        </span>
                     </label>
                 </li>
             </ul>
@@ -69,7 +73,10 @@
                 <li th:each="cat: ${categories}">
                     <label>
                         <input type="checkbox" name="category-filter" th:value="${cat.id}">
-                        <span th:text="${cat.name}"></span>
+                        <span>
+                            <a th:text="${cat.name}"></a>
+                            <em th:text="${cat.numberOfProducts}"></em>
+                        </span>
                     </label>
                 </li>
             </ul>
