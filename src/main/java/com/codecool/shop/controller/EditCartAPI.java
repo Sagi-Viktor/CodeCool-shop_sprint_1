@@ -22,14 +22,7 @@ public class EditCartAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TODO Refactor this
-        BufferedReader bufferedReader = req.getReader();
-        StringBuilder content = new StringBuilder();
-        String inputLine;
-        while ((inputLine = bufferedReader.readLine()) != null) {
-            content.append(inputLine);
-        }
-        String cartItemString = content.toString();
-        JsonObject cartItem = new Gson().fromJson(cartItemString, JsonObject.class);
+        JsonObject cartItem = JsonUtil.getRequestJsonObject(req);
         int productId = cartItem.get("productId").getAsInt();
         int quantity = cartItem.get("quantity").getAsInt();
 
