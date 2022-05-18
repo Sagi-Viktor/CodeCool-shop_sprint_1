@@ -11,8 +11,11 @@ async function main() {
     cartItemDropdowns.forEach(dropdown => dropdown.addEventListener("change", editCart))
 }
 
-function editCart(event) {
-    console.log(event.target);
+async function editCart(event) {
+    const input = event.target;
+    const productId = input.getAttribute("data-product-id");
+    const quantity = input.value;
+    await dataHandler.editCart(productId, quantity);
 }
 
 async function getCartItemsData() {
@@ -43,7 +46,7 @@ function createQuantitySelect(cartItemId, quantity) {
         `;
     }
     return `
-        <select class="cart-item-select" data-id="${cartItemId}">
+        <select class="cart-item-select" data-product-id="${cartItemId}">
         ${options}
     </select>
     `;
