@@ -39,46 +39,14 @@ public class GetProducts extends HttpServlet {
 
         List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");
         List<Integer> categoryIds = getQueryParamValue(request, "category_id");
-        List<ProductCategory> productCategories = getProductCategories(productService, categoryIds);
-        List<Supplier> suppliers = getSuppliers(productService, supplierIds);
-        List<Integer> availableCategories = getAvailableCategories(productService, suppliers);
-        List<Product> products = (!productCategories.isEmpty()) ? getProductsByCategories(productDataStore, productCategories) : getProductsBySuppliers(suppliers);
+        List<ProductCategory> productCategories = productService.getProductCategories(categoryIds);
+        List<Supplier> suppliers = productService.getSuppliers(supplierIds);
+        List<Integer> availableCategories = productService.getAvailableCategories(suppliers);
+        List<Product> products = (!productCategories.isEmpty()) ? productService.getProductsByCategories(productCategories) : productService.getProductsBySuppliers(suppliers);
         GetProductsModel getProductsModel = new GetProductsModel(availableCategories, products);
         out.println(new Gson().toJson(getProductsModel));
     }
 
-    private List<Integer> getAvailableCategories(ProductService productService, List<Supplier> suppliers) {
-        return suppliers.stream()
-                .map(Supplier::getProductCategoryIds)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
-    }
-
-    private List<ProductCategory> getProductCategories(ProductService productService, List<Integer> categoryIds) {
-        return categoryIds.stream()
-                .map(productService::getProductCategory)
-                .collect(Collectors.toList());
-    }
-
-    private List<Supplier> getSuppliers(ProductService productService, List<Integer> supplierIds) {
-        return supplierIds.stream()
-                .map(productService::getSupplierCategory)
-                .collect(Collectors.toList());
-    }
-
-    private List<Product> getProductsBySuppliers(List<Supplier> suppliers) {
-        return suppliers.stream()
-                .map(Supplier::getProducts)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
-    }
-
-    private List<Product> getProductsByCategories(ProductDao productDataStore, List<ProductCategory> productCategories) {
-        return productCategories.stream()
-                .map(productDataStore::getBy)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
-    }
 
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
         Optional<String> queryParameterValue = Optional.ofNullable(request.getParameter(queryParameter));
