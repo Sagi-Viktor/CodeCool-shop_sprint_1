@@ -7,6 +7,12 @@ async function main() {
     const cartItemsData = await getCartItemsData();
     const cartItems = createCartItemsDiv(cartItemsData);
     cart.innerHTML = cartItems;
+    const cartItemDropdowns = document.querySelectorAll(".cart-item-select");
+    cartItemDropdowns.forEach(dropdown => dropdown.addEventListener("change", editCart))
+}
+
+function editCart(event) {
+    console.log(event.target);
 }
 
 async function getCartItemsData() {
@@ -21,15 +27,15 @@ function createCartItemsDiv(cartItems) {
         cartItemsDiv += `
         <div class="cart-item">
             <p>${product["name"]}</p>
-            <small>${supplier["name"]}</small>
-            ${createQuantitySelect(cartItem["quantity"])}
+            <small>${supplier["name"]}</small><br>
+            ${createQuantitySelect(product["id"], cartItem["quantity"])}
     </div>
         `;
     }
     return cartItemsDiv;
 }
 
-function createQuantitySelect(quantity) {
+function createQuantitySelect(cartItemId, quantity) {
     let options = ``;
     for (let number = 1; number < 11; number++) {
         options += `
@@ -37,7 +43,7 @@ function createQuantitySelect(quantity) {
         `;
     }
     return `
-        <select>
+        <select class="cart-item-select" data-id="${cartItemId}">
         ${options}
     </select>
     `;
