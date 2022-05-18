@@ -1,5 +1,12 @@
+import {dataHandler} from "./dataHandler.js";
+
 main();
 
-function main() {
-    console.log("imported cart.js");
+async function main() {
+    const cartItems = await getCartItems();
+    console.log(cartItems);
+}
+
+async function getCartItems() {
+    return await dataHandler.getItemsFromCart();
 }
