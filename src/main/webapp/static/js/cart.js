@@ -20,11 +20,14 @@ async function editCart(event) {
     const productId = input.getAttribute("data-product-id");
     const quantity = input.value;
     const cartItemsData = await dataHandler.editCart(productId, quantity);
+    console.log(cartItemsData);
     cart.innerHTML = createCartItemsDiv(cartItemsData);
     addCartItemInputsEventListener();
 }
 
 function createCartItemsDiv(cartItems) {
+    const currency = cartItems[0]["product"]["defaultCurrency"];
+    let totalPrice = 0;
     let cartItemsDiv = ``;
     for (let cartItem of cartItems) {
         const product = cartItem["product"];
@@ -33,12 +36,15 @@ function createCartItemsDiv(cartItems) {
         <div class="cart-item">
             <p>${product["name"]}</p>
             <small>${supplier["name"]}</small><br>
-            <p>${product[""]}</p>
+            <p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p>
             ${createQuantitySelect(product["id"], cartItem["quantity"])}
     </div>
         `;
+        totalPrice += parseInt(product["defaultPrice"]) * parseInt(cartItem["quantity"]);
     }
-    return cartItemsDiv;
+    return `${cartItemsDiv}
+    <p>Total price: ${totalPrice} ${currency}</p>
+    `;
 }
 
 function createQuantitySelect(cartItemId, quantity) {
