@@ -48,6 +48,13 @@ public class GetProducts extends HttpServlet {
                 .collect(Collectors.toList());
     }
 
+    private List<Product> getProductsByCategories(ProductDao productDataStore, List<ProductCategory> productCategories) {
+        return productCategories.stream()
+                .map(productDataStore::getBy)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
         Optional<String> queryParameterValue = Optional.ofNullable(request.getParameter(queryParameter));
         return Arrays.stream(queryParameterValue.orElse("").split(","))
