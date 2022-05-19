@@ -19,9 +19,7 @@ import static com.codecool.shop.controller.JsonUtil.getRequestJsonObject;
 public class RemoveFromCartAPI extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonObject cartItem = getRequestJsonObject(req);
-        int productId = cartItem.get("productId").getAsInt();
-
+        int productId = Integer.parseInt(req.getParameter("product-id"));
         CartDao cart = CartDaoMem.getInstance();
         cart.find(productId).ifPresent(cart::remove);
     }
