@@ -6,29 +6,27 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.CartItem;
 import com.codecool.shop.model.Product;
-import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/api/add-to-cart"})
-public class AddToCartAPI extends HttpServlet {
+@WebServlet(urlPatterns = {"/api/edit-cart"})
+public class EditCartAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Replace CharStreams
-        String requestData = CharStreams.toString(req.getReader());
-        int productId = Integer.parseInt(requestData);
+        JsonObject cartItem = JsonUtil.getRequestJsonObject(req);
+        int productId = cartItem.get("productId").getAsInt();
+        int quantity = cartItem.get("quantity").getAsInt();
 
         CartDao cart = CartDaoMem.getInstance();
-        ProductDao productStore = ProductDaoMem.getInstance();
-        Product product = productStore.find(productId);
-
-        Optional<CartItem> cartItem = cart.find(productId);
-        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cart.add(new CartItem(product, 1)));
+        cart.find(productId).ifPresent(item -> item.setQuantity(quantity));
     }
+
 }
