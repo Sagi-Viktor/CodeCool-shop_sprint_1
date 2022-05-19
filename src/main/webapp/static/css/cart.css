@@ -7,7 +7,7 @@ h1 {
 }
 
 #cart {
-    margin: 5% 10%;
+    margin: 5% 10% 20px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px gray;
@@ -46,4 +46,9 @@ td, th {
     font-size: 1.5rem;
     font-weight: bold;
     margin-right: 30px;
+}
+
+.checkout-payment {
+    float: right;
+    margin-right: 10%;
 }
