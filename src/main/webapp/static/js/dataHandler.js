@@ -7,7 +7,7 @@ export const dataHandler = {
     getProducts: async function(supplierId, categoryId) {
         return await apiGet(`api/products${createQueryParams(supplierId, categoryId)}`)
     },
-    getItemsFromCart: async function () {
+    getCart: async function () {
         return await apiGet("/api/cart-items");
     },
     editCart: async function (productId, quantity) {

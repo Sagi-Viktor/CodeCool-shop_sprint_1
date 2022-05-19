@@ -10,16 +10,16 @@ async function main() {
 }
 
 async function refreshCartItems() {
-    const cartItemsData = await dataHandler.getItemsFromCart();
-    cart.innerHTML = createCartItemsDiv(cartItemsData);
+    const cartData = await dataHandler.getCart();
+    cart.innerHTML = createCartTable(cartData);
     addCartEventListeners();
 }
 
-function createCartItemsDiv(cartItems) {
+function createCartTable(cart) {
     // TODO Refactor this, get total price from server
+    const cartItems = cart["cartItems"];
     if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
-    let totalPrice = 0;
     let tableBody = ``;
     for (let cartItem of cartItems) {
         const product = cartItem["product"];
@@ -35,7 +35,6 @@ function createCartItemsDiv(cartItems) {
                 <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
             </tr>
         `;
-        totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
     }
     return `
     <table>
@@ -52,7 +51,7 @@ function createCartItemsDiv(cartItems) {
             ${tableBody}
         </tbody>
     </table>
-    <p id="total-price">Total price: ${totalPrice} ${currency}</p>
+    <p id="total-price">Total price: ${cart["totalPrice"]} ${currency}</p>
     `;
 }
 
