@@ -2,6 +2,10 @@ body {
     background-color: #f5f5f5 !important;
 }
 
+h1 {
+    text-align: center;
+}
+
 #cart {
     margin: 5% 10%;
     padding: 20px;
