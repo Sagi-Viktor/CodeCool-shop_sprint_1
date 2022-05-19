@@ -99,4 +99,8 @@ public class Initializer implements ServletContextListener {
         }
         return productCategory;
     }
+
+    private void addProduct(String name, String price, String currency, ProductCategory productCategory, Supplier supplier, String imageName, String description) {
+        productDataStore.add(new Product(name, new BigDecimal(price), currency, description, productCategory, supplier, imageName));
+    }
 }
