@@ -1,6 +1,7 @@
 const checkout = {
     init(){
         this.confirmEmail();
+        this.checkBoxForSameAddress();
     },
 
     confirmEmail(){
@@ -24,6 +25,21 @@ const checkout = {
         }
     },
 
+    checkBoxForSameAddress(){
+        let checkBox = document.querySelector("#same-address");
+        checkBox.addEventListener("change", checkBoxEventListener);
+
+        function checkBoxEventListener(){
+            let billingContainer = document.querySelector("#billing-info");
+
+            if (billingContainer.getAttribute("hidden") === null){
+                billingContainer.setAttribute("hidden", "");
+            } else {
+                billingContainer.removeAttribute("hidden");
+            }
+
+        }
+    }
 }
 
 checkout.init();
