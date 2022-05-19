@@ -8,10 +8,10 @@ public class ProductCategory extends BaseModel {
     private final List<Integer> supplierIds;
     transient private List<Product> products;
 
-    public ProductCategory(String name, String department, String description, Integer... supplierIds) {
+    public ProductCategory(String name, String department, String description, List<Integer> supplierIds) {
         super(name, description);
         this.department = department;
-        this.supplierIds = List.of(supplierIds);
+        this.supplierIds = supplierIds;
         this.products = new ArrayList<>();
     }
 
