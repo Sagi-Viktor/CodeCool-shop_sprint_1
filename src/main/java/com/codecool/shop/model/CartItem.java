@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import java.math.BigDecimal;
+
 public class CartItem {
 
     private final Product product;
@@ -28,6 +30,10 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getPrice() {
+        return product.getDefaultPrice().multiply(BigDecimal.valueOf(quantity));
     }
 
     public int getProductId() {
