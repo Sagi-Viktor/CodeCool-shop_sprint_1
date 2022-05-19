@@ -5,11 +5,13 @@ import java.util.List;
 
 public class ProductCategory extends BaseModel {
     private String department;
-    private List<Product> products;
+    private final List<Integer> supplierIds;
+    transient private List<Product> products;
 
-    public ProductCategory(String name, String department, String description) {
-        super(name);
+    public ProductCategory(String name, String department, String description, List<Integer> supplierIds) {
+        super(name, description);
         this.department = department;
+        this.supplierIds = supplierIds;
         this.products = new ArrayList<>();
     }
 
@@ -29,8 +31,25 @@ public class ProductCategory extends BaseModel {
         return this.products;
     }
 
+    public int getNumberOfProducts() {
+        return products.size();
+    }
+
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Integer> getSupplierIds() {
+        return List.copyOf(supplierIds);
+    }
+
+    public boolean hasSupplier(int supplierId) {
+        return supplierIds.contains(supplierId);
     }
 
     @Override

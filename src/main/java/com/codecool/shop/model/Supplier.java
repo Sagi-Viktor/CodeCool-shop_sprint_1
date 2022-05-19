@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Supplier extends BaseModel {
-    private List<Product> products;
+    transient private List<Product> products;
+    private List<Integer> productCategoryIds;
 
     public Supplier(String name, String description) {
-        super(name);
+        super(name, description);
         this.products = new ArrayList<>();
+        this.productCategoryIds = new ArrayList<>();
     }
 
     public void setProducts(ArrayList<Product> products) {
@@ -16,11 +18,27 @@ public class Supplier extends BaseModel {
     }
 
     public List<Product> getProducts() {
-        return this.products;
+        return List.copyOf(products);
+    }
+
+    public int getNumberOfProducts() {
+        return products.size();
     }
 
     public void addProduct(Product product) {
         this.products.add(product);
+    }
+
+    public void addProductCategory(int productCategoryId) {
+        productCategoryIds.add(productCategoryId);
+    }
+
+    public int getNumberOfProductCategories() {
+        return productCategoryIds.size();
+    }
+
+    public List<Integer> getProductCategoryIds() {
+        return productCategoryIds;
     }
 
     @Override

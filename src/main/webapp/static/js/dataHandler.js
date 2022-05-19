@@ -1,8 +1,25 @@
 export const dataHandler = {
     addProductToCart: async function (productId) {
         await apiPost("/api/add-to-cart", productId);
-    }
+    },
 
+    getProducts: async function(supplierId, categoryId) {
+        return await apiGet(`api/products${createQueryParams(supplierId, categoryId)}`)
+    },
+}
+
+function createQueryParams(supplierId, categoryId) {
+    let query = "";
+    if (supplierId.length > 0) {
+        if (categoryId.length > 0) {
+            query = `?supplier_id=${supplierId.toString()}&category_id=${categoryId.toString()}`;
+        } else {
+            query = `?supplier_id=${supplierId.toString()}`;
+        }
+    } else if (categoryId.length > 0) {
+        query = `?category_id=${categoryId.toString()}`;
+    }
+    return query;
 }
 
 async function apiGet(url) {

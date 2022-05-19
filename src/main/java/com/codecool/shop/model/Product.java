@@ -2,20 +2,31 @@ package com.codecool.shop.model;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 
 public class Product extends BaseModel {
 
+    private String imageName;
     private BigDecimal defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
 
 
-    public Product(String name, BigDecimal defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    public Product(
+            String name,
+            BigDecimal defaultPrice,
+            String currencyString,
+            String description,
+            ProductCategory productCategory,
+            Supplier supplier,
+            String imageName
+    ) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+        this.setSupplier(supplier);
+        this.setImageName(imageName);
     }
 
     public BigDecimal getDefaultPrice() {
@@ -61,19 +72,34 @@ public class Product extends BaseModel {
         this.supplier.addProduct(this);
     }
 
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
                         "name: %2$s, " +
-                        "defaultPrice: %3$f, " +
-                        "defaultCurrency: %4$s, " +
-                        "productCategory: %5$s, " +
-                        "supplier: %6$s",
+                        "description: %3$s" +
+                        "defaultPrice: %4$f, " +
+                        "defaultCurrency: %5$s, " +
+                        "productCategory: %6$s, " +
+                        "supplier: %7$s",
                 this.id,
                 this.name,
+                this.description,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
+    }
+
+    public boolean hasSupplier(List<Supplier> selectedSuppliers) {
+        return selectedSuppliers.stream()
+                .anyMatch(supplier -> supplier.id == this.supplier.id);
     }
 }
