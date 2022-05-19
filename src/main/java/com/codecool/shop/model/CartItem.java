@@ -21,7 +21,9 @@ public class CartItem {
     }
 
     public void increaseQuantity() {
-        quantity++;
+        if (quantity < 10) {
+            quantity++;
+        }
     }
 
     public void decreaseQuantity() {
