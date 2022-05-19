@@ -1,3 +1,27 @@
 body {
-    background-color: pink;
+    background-color: #f1f1f1;
+}
+
+#cart {
+    margin: 5% 10%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px gray;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: white;
+}
+
+.cart-item {
+    border-bottom: 1px solid gray;
+    padding: 30px;
+}
+
+#total-price {
+    align-self: end;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 30px;
 }

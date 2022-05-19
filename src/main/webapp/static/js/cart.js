@@ -35,7 +35,7 @@ function createCartItemsDiv(cartItems) {
         totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
     }
     return `${cartItemsDiv}
-    <p>Total price: ${totalPrice} ${currency}</p>
+    <p id="total-price">Total price: ${totalPrice} ${currency}</p>
     `;
 }
 
