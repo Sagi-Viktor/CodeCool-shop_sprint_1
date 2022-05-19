@@ -21,18 +21,12 @@ import java.io.IOException;
 public class EditCartAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Refactor this
         JsonObject cartItem = JsonUtil.getRequestJsonObject(req);
         int productId = cartItem.get("productId").getAsInt();
         int quantity = cartItem.get("quantity").getAsInt();
 
         CartDao cart = CartDaoMem.getInstance();
         cart.find(productId).ifPresent(item -> item.setQuantity(quantity));
-
-        var cartItems = cart.getAll();
-
-        var cartItemsJson = new Gson().toJson(cartItems);
-        resp.getWriter().println(cartItemsJson);
     }
 
 }

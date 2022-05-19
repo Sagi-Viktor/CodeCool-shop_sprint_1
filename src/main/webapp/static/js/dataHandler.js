@@ -1,6 +1,6 @@
 export const dataHandler = {
     addProductToCart: async function (productId) {
-        await apiPost("/api/add-to-cart", productId);
+        await apiPost("/api/add-to-cart", parseInt(productId));
     },
     getProducts: async function(supplierId, categoryId) {
         return await apiGet(`api/products${createQueryParams(supplierId, categoryId)}`)
@@ -9,11 +9,14 @@ export const dataHandler = {
         return await apiGet("/api/cart-items");
     },
     editCart: async function (productId, quantity) {
-        return await apiPost("/api/edit-cart",
+        await apiPost("/api/edit-cart",
             {
                 "productId": parseInt(productId),
                 "quantity": parseInt(quantity)
-            }, true);
+            });
+    },
+    removeItemFromCart: async function (productId) {
+        await apiDelete(`/api/remove-from-cart?product-id=${productId}`);
     }
 };
 
