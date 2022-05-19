@@ -59,19 +59,29 @@ public class Initializer implements ServletContextListener {
 
         //setting up products and printing it
 
-        productDataStore.add(new Product(
-                "Happy Little Dinosaurs Base Game", new BigDecimal("20"),
-                "USD", " Lately, it feels like we’re all just dinosaurs trying to avoid the falling meteors.\n" +
-                "In this 2-4 player game, you’ll try to dodge all of life’s little disasters while tuning out your incredibly rude inner demons. You might fall into a pit of hot lava or get ghosted by your dino date. But think happy thoughts because the dino who survives it all wins the game!\n" +
-                "Happy Little Dinosaurs takes 30-60 minutes to play and is for 2-4 players. It is recommended for ages 8+.\n" +
-                "The box contains 97 cards, 4 Dinosaur player boards, 4 Dinosaur meeples, and 1 rule book. ",
-                actionDrafting, treeTurtle,
-                "happy_little_dinosaurs_base_game.jpg"
-        ));
-
-
-
-
+        addProduct(
+                "Happy Little Dinosaurs Base Game", "20",
+                "USD",
+                actionDrafting,
+                treeTurtle,
+                "happy_little_dinosaurs_base_game.jpg",
+                " Lately, it feels like we’re all just dinosaurs trying to avoid the falling meteors.\n" +
+                        "In this 2-4 player game, you’ll try to dodge all of life’s little disasters while tuning out your incredibly rude inner demons. You might fall into a pit of hot lava or get ghosted by your dino date. But think happy thoughts because the dino who survives it all wins the game!\n" +
+                        "Happy Little Dinosaurs takes 30-60 minutes to play and is for 2-4 players. It is recommended for ages 8+.\n" +
+                        "The box contains 97 cards, 4 Dinosaur player boards, 4 Dinosaur meeples, and 1 rule book. "
+        );
+        addProduct(
+                "Happy Little Dinosaurs: Perils of Puberty Expansion",
+                "12.99",
+                "USD",
+                actionDrafting,
+                treeTurtle,
+                "happy_little_dinosaurs:_perils_of_puberty_expansion .jpg",
+                " The Happy Little Dinosaurs Perils of Puberty Expansion is designed to be added to your Happy Little Dinosaurs Card Game.\n" +
+                        "It’s time to talk about your changing body!\n" +
+                        "This 54-card expansion pack will take you back to the days of terrible acne, raging hormones, and carnivorous classmates...or maybe those are just a dinosaur thing.\n" +
+                        "This game was designed for 2-4 players, has a 30-60 minute playtime, and is recommended for ages 8+. "
+        );
 
 
         productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon, "product_1.jpg"));
