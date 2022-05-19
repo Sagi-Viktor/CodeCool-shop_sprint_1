@@ -35,16 +35,16 @@ public class Initializer implements ServletContextListener {
         Supplier treeTurtle = addSupplier("TreeTurtle", "Funny and cute");
 
 
-        Supplier amazon = addSupplier("Amazon", "Digital content and services");
-        Supplier lenovo = addSupplier("Lenovo", "Computers");
-        Supplier sony = addSupplier("Sony", "Consoles");
+//        Supplier amazon = addSupplier("Amazon", "Digital content and services");
+//        Supplier lenovo = addSupplier("Lenovo", "Computers");
+//        Supplier sony = addSupplier("Sony", "Consoles");
 
 
         //setting up a new product category
         ProductCategory actionDrafting = addProductCategory("Action Drafting", "Board game", "A drafting action category", hasbroGaming, treeTurtle);
 
 
-        ProductCategory cooperative = addProductCategory("Cooperative", "Board game", "Cooperative category", hasbroGaming);
+        ProductCategory cooperative = addProductCategory("Cooperative", "Board game", "Cooperative category", hasbroGaming, treeTurtle);
         ProductCategory creative = addProductCategory("Creative", "Board game", "Creative category", hasbroGaming);
         ProductCategory educational = addProductCategory("Educational", "Board game", "Educational category", hasbroGaming);
         ProductCategory euroGame = addProductCategory("Eurogame", "Board game", "Eurogame category", hasbroGaming);
@@ -52,9 +52,9 @@ public class Initializer implements ServletContextListener {
         ProductCategory luck = addProductCategory("Luck", "Board game", "Luck category", hasbroGaming);
 
 
-        ProductCategory tablet = addProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.", amazon, lenovo);
-        ProductCategory pc = addProductCategory("Pc", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.", lenovo);
-        ProductCategory console = addProductCategory("Console", "Hardware", "A big box with lots of fun games.", sony);
+//        ProductCategory tablet = addProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.", amazon, lenovo);
+//        ProductCategory pc = addProductCategory("Pc", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.", lenovo);
+//        ProductCategory console = addProductCategory("Console", "Hardware", "A big box with lots of fun games.", sony);
 
 
         //setting up products and printing it
@@ -62,37 +62,74 @@ public class Initializer implements ServletContextListener {
         addProduct(
                 "Happy Little Dinosaurs Base Game", "20",
                 "USD",
-                actionDrafting,
                 treeTurtle,
                 "happy_little_dinosaurs_base_game.jpg",
-                " Lately, it feels like we’re all just dinosaurs trying to avoid the falling meteors.\n" +
+                "Lately, it feels like we’re all just dinosaurs trying to avoid the falling meteors.\n" +
                         "In this 2-4 player game, you’ll try to dodge all of life’s little disasters while tuning out your incredibly rude inner demons. You might fall into a pit of hot lava or get ghosted by your dino date. But think happy thoughts because the dino who survives it all wins the game!\n" +
                         "Happy Little Dinosaurs takes 30-60 minutes to play and is for 2-4 players. It is recommended for ages 8+.\n" +
-                        "The box contains 97 cards, 4 Dinosaur player boards, 4 Dinosaur meeples, and 1 rule book. "
+                        "The box contains 97 cards, 4 Dinosaur player boards, 4 Dinosaur meeples, and 1 rule book. ",
+                actionDrafting
         );
         addProduct(
                 "Happy Little Dinosaurs: Perils of Puberty Expansion",
                 "12.99",
                 "USD",
-                actionDrafting,
                 treeTurtle,
                 "happy_little_dinosaurs:_perils_of_puberty_expansion .jpg",
-                " The Happy Little Dinosaurs Perils of Puberty Expansion is designed to be added to your Happy Little Dinosaurs Card Game.\n" +
+                "The Happy Little Dinosaurs Perils of Puberty Expansion is designed to be added to your Happy Little Dinosaurs Card Game.\n" +
                         "It’s time to talk about your changing body!\n" +
                         "This 54-card expansion pack will take you back to the days of terrible acne, raging hormones, and carnivorous classmates...or maybe those are just a dinosaur thing.\n" +
-                        "This game was designed for 2-4 players, has a 30-60 minute playtime, and is recommended for ages 8+. "
+                        "This game was designed for 2-4 players, has a 30-60 minute playtime, and is recommended for ages 8+. ",
+                actionDrafting
+        );
+        addProduct(
+                "Happy Little Dinosaurs: 5-6 Player Expansion Pack ",
+                "15",
+                "USD",
+                treeTurtle,
+                "happy_little_dinosaurs:_5-6_player-expansion_pack .jpg",
+                " The Happy Little Dinosaurs 5-6 Player Expansion is designed to be added to your Happy Little Dinosaurs Card Game.\n" +
+                        "Get ready to face new disasters and meet more unlucky Dinosaurs! You’ll dodge unimaginable horrors like killer chickens, deadly tornadoes, and terrible movies.\n" +
+                        "This 50-card expansion pack introduces 2 new Dinosaur characters, making the game playable for 2-6 players.\n" +
+                        "The expansion contains 50 cards, 2 Dinosaur player boards, 2 Dinosaur meeples, and 1 rule book.",
+                actionDrafting
+        );
+        addProduct(
+                "Happy Little Dinosaurs: Dating Disasters Expansion",
+                "69",
+                "USD",
+                treeTurtle,
+                "Happy_Little_Dinosaurs:_Dating_Disasters_Expansion .jpg",
+                "The Happy Little Dinosaurs Dating Disasters Expansion is designed to be added to your Happy Little Dinosaurs Card Game.\n" +
+                        "The only thing worse than a falling meteor? A first date.\n" +
+                        "In this 54-card expansion pack, you might dodge the dreaded friendzone, encounter a giant catfish, or go out with a dino who says “I love you” way too early. Awkward...\n" +
+                        "This game was designed for 2-4 players, has a 30-60 minute playtime, and is recommended for ages 8+.",
+                actionDrafting
+        );
+        addProduct(
+                "Llamas Unleashed",
+                "17",
+                "USD",
+                treeTurtle,
+                "Llamas_Unleashed.jpg",
+                " Farmageddon is here. Prepare for a barnyard battle of epic proportions.\n" +
+                        "Step aside, Unicorns...Llamas will take it from here! Llamas Unleashed includes 135 brand new cards starring agriculture’s lankiest and most lovable livestock.\n" +
+                        "But Llamas aren’t the only new kid on the block. Goats, Rams, and Alpacas also run rampant in this witty and whimsical barnyard-themed card game based on the Unstable Unicorns mechanics you already know and love!\n" +
+                        "The goal of Llamas Unleashed is to be the first person to collect seven Llamas, Goats, Alpacas, or Rams in your Farm. ",
+                actionDrafting,
+                cooperative
         );
 
 
-        productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon, "product_1.jpg"));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", pc, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
-        productDataStore.add(new Product("playStation Fire HD 8", new BigDecimal("89"), "USD", "best console ever", console, sony, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon, "product_1.jpg"));
+//        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", pc, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
+//        productDataStore.add(new Product("playStation Fire HD 8", new BigDecimal("89"), "USD", "best console ever", console, sony, "product_1.jpg"));
     }
 
     private Supplier addSupplier(String name, String description) {
@@ -110,7 +147,7 @@ public class Initializer implements ServletContextListener {
         return productCategory;
     }
 
-    private void addProduct(String name, String price, String currency, ProductCategory productCategory, Supplier supplier, String imageName, String description) {
-        productDataStore.add(new Product(name, new BigDecimal(price), currency, description, productCategory, supplier, imageName));
+    private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
+        productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
     }
 }

@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Product extends BaseModel {
     private String imageName;
     private BigDecimal defaultPrice;
     private Currency defaultCurrency;
-    private ProductCategory productCategory;
+    private List<ProductCategory> productCategories;
     private Supplier supplier;
 
 
@@ -18,13 +19,15 @@ public class Product extends BaseModel {
             BigDecimal defaultPrice,
             String currencyString,
             String description,
-            ProductCategory productCategory,
             Supplier supplier,
-            String imageName
+            String imageName,
+            ProductCategory[] productCategories
     ) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
-        this.setProductCategory(productCategory);
+        for (ProductCategory category : productCategories) {
+            this.setProductCategories(category);
+        }
         this.setSupplier(supplier);
         this.setImageName(imageName);
     }
@@ -54,13 +57,14 @@ public class Product extends BaseModel {
         this.defaultCurrency = Currency.getInstance(currency);
     }
 
-    public ProductCategory getProductCategory() {
-        return productCategory;
+    public List<ProductCategory> getProductCategories() {
+        return List.copyOf(productCategories);
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-        this.productCategory.addProduct(this);
+    public void setProductCategories(ProductCategory productCategories) {
+        if (this.productCategories == null) this.productCategories = new ArrayList<>();
+        productCategories.addProduct(this);
+        this.productCategories.add(productCategories);
     }
 
     public Supplier getSupplier() {
@@ -80,6 +84,10 @@ public class Product extends BaseModel {
         this.imageName = imageName;
     }
 
+    public boolean hasCategory(int categoryId) {
+        return productCategories.stream().anyMatch(productCategory -> productCategory.getId() == categoryId);
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
@@ -94,7 +102,7 @@ public class Product extends BaseModel {
                 this.description,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
-                this.productCategory.getName(),
+                this.productCategories.stream().map(ProductCategory::getName),
                 this.supplier.getName());
     }
 
