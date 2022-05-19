@@ -1,16 +1,18 @@
 package com.codecool.shop.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Supplier extends BaseModel {
     transient private List<Product> products;
-    private List<Integer> productCategoryIds;
+    private Set<Integer> productCategoryIds;
 
     public Supplier(String name, String description) {
         super(name, description);
         this.products = new ArrayList<>();
-        this.productCategoryIds = new ArrayList<>();
+        this.productCategoryIds = new HashSet<>();
     }
 
     public void setProducts(ArrayList<Product> products) {
@@ -38,7 +40,7 @@ public class Supplier extends BaseModel {
     }
 
     public List<Integer> getProductCategoryIds() {
-        return productCategoryIds;
+        return List.copyOf(productCategoryIds);
     }
 
     @Override

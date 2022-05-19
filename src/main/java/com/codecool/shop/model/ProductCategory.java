@@ -1,17 +1,19 @@
 package com.codecool.shop.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductCategory extends BaseModel {
     private String department;
-    private final List<Integer> supplierIds;
+    private final Set<Integer> supplierIds;
     transient private List<Product> products;
 
-    public ProductCategory(String name, String department, String description, List<Integer> supplierIds) {
+    public ProductCategory(String name, String department, String description) {
         super(name, description);
         this.department = department;
-        this.supplierIds = supplierIds;
+        this.supplierIds = new HashSet<>();
         this.products = new ArrayList<>();
     }
 
@@ -63,5 +65,9 @@ public class ProductCategory extends BaseModel {
                 this.name,
                 this.department,
                 this.description);
+    }
+
+    public void addSupplier(Supplier supplier) {
+        supplierIds.add(supplier.getId());
     }
 }
