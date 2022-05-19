@@ -16,25 +16,42 @@ async function refreshCartItems() {
 }
 
 function createCartItemsDiv(cartItems) {
+    // TODO Refactor this, get total price from server
     if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
     let totalPrice = 0;
-    let cartItemsDiv = ``;
+    let tableBody = ``;
     for (let cartItem of cartItems) {
         const product = cartItem["product"];
-        const supplier = product["supplier"];
-        cartItemsDiv += `
-        <div class="cart-item">
-            <p>${product["name"]}</p>
-            <small>${supplier["name"]}</small><br>
-            <p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p>
-            ${createQuantitySelect(product["id"], cartItem["quantity"])}
-            <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
-    </div>
+        tableBody += `
+            <tr class="cart-item">
+                <td><img src="${"/static/img/" + product["imageName"]}" alt=""></td>
+                <td>
+                    <h3>${product["name"]}</h3>
+                    <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
+                </td>
+                <td><p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p></td>
+                <td>${createQuantitySelect(product["id"], cartItem["quantity"])}</td>
+                <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
+            </tr>
         `;
         totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
     }
-    return `${cartItemsDiv}
+    return `
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Unit price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${tableBody}
+        </tbody>
+    </table>
     <p id="total-price">Total price: ${totalPrice} ${currency}</p>
     `;
 }

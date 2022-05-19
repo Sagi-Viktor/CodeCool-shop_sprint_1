@@ -1,5 +1,5 @@
 body {
-    background-color: #f1f1f1;
+    background-color: #f5f5f5 !important;
 }
 
 #cart {
@@ -16,7 +16,17 @@ body {
 
 .cart-item {
     border-bottom: 1px solid gray;
-    padding: 30px;
+    padding: 100px;
+    justify-content: center;
+}
+
+.cart-item img {
+    align-self: center;
+    max-height: 100px;
+}
+
+td, th {
+    padding: 20px;
 }
 
 #total-price {
