@@ -58,4 +58,19 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", pc, lenovo, "product_1.jpg"));
         productDataStore.add(new Product("playStation Fire HD 8", new BigDecimal("89"), "USD", "best console ever", console, sony, "product_1.jpg"));
     }
+
+    private Supplier addSupplier(String name, String description) {
+        Supplier supplier = new Supplier(name, description);
+        supplierDataStore.add(supplier);
+        return supplier;
+    }
+
+    private ProductCategory addProductCategory(String name, String department, String description, Supplier... suppliers) {
+        ProductCategory productCategory = new ProductCategory(name, department, description, Arrays.stream(suppliers).map(Supplier::getId).collect(Collectors.toList()));
+        productCategoryDataStore.add(productCategory);
+        for (Supplier supplier : suppliers) {
+            supplier.addProductCategory(productCategory.getId());
+        }
+        return productCategory;
+    }
 }
