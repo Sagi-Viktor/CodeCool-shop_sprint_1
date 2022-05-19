@@ -10,33 +10,53 @@ async function main() {
 }
 
 async function refreshCartItems() {
-    const cartItemsData = await dataHandler.getItemsFromCart();
-    cart.innerHTML = createCartItemsDiv(cartItemsData);
+    const cartData = await dataHandler.getCart();
+    cart.innerHTML = createCartTable(cartData);
     addCartEventListeners();
 }
 
-function createCartItemsDiv(cartItems) {
+function createCartTable(cart) {
+    const cartItems = cart["cartItems"];
     if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
-    let totalPrice = 0;
-    let cartItemsDiv = ``;
+    let tableBody = createCartTableBody(cartItems);
+    return `
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Unit price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${tableBody}
+        </tbody>
+    </table>
+    <p id="total-price">Total price: ${cart["totalPrice"]} ${currency}</p>
+    `;
+}
+
+function createCartTableBody(cartItems) {
+    let tableBody = ``;
     for (let cartItem of cartItems) {
         const product = cartItem["product"];
-        const supplier = product["supplier"];
-        cartItemsDiv += `
-        <div class="cart-item">
-            <p>${product["name"]}</p>
-            <small>${supplier["name"]}</small><br>
-            <p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p>
-            ${createQuantitySelect(product["id"], cartItem["quantity"])}
-            <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
-    </div>
+        tableBody += `
+            <tr class="cart-item">
+                <td><img src="${"/static/img/" + product["imageName"]}" alt=""></td>
+                <td>
+                    <h3>${product["name"]}</h3>
+                    <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
+                </td>
+                <td><p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p></td>
+                <td>${createQuantitySelect(product["id"], cartItem["quantity"])}</td>
+                <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
+            </tr>
         `;
-        totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
     }
-    return `${cartItemsDiv}
-    <p>Total price: ${totalPrice} ${currency}</p>
-    `;
+    return tableBody;
 }
 
 function createQuantitySelect(cartItemId, quantity) {

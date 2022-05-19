@@ -4,11 +4,12 @@ import {dataHandler} from "./dataHandler.js";
 const htmlElements = {
     categories: document.querySelector("ul#category-list"),
     suppliers: document.querySelector("ul#supplier-list"),
-    productContainer: document.querySelector("div#products"),
+    productContainer: document.querySelector("div#products")
 }
 
 function main() {
     addEventListeners();
+    refreshCartItemCount();
 }
 
 function addEventListeners() {
@@ -16,7 +17,12 @@ function addEventListeners() {
         (checkbox) => checkbox.addEventListener("click", refreshProducts));
     htmlElements.suppliers.querySelectorAll("input").forEach(
         (checkbox) => checkbox.addEventListener("click", refreshProducts));
+    addButtonEventListener();
+}
 
+function addButtonEventListener() {
+    document.querySelectorAll(".add-product").forEach(
+        (button) => button.addEventListener("click", addProductToCart));
 }
 
 function getSelectedIds(checkBoxList) {
@@ -68,8 +74,9 @@ async function refreshProducts() {
     let supplierIdList = getSelectedIds(htmlElements.suppliers);
     let categoryIdList = getSelectedIds(htmlElements.categories);
     const refreshedProducts = await dataHandler.getProducts(supplierIdList, categoryIdList);
-    changeCheckboxAvailability(refreshedProducts.numberOfProductsInCategories);
-    changeProducts(refreshedProducts.productsByFilter);
+    await changeCheckboxAvailability(refreshedProducts.numberOfProductsInCategories);
+    await changeProducts(refreshedProducts.productsByFilter);
+    await addButtonEventListener();
 }
 
 function changeProducts(products) {
@@ -81,7 +88,7 @@ function changeProducts(products) {
 }
 
 function createProductElement(product) {
-    return `<div class="col col-sm-12 col-md-6 col-lg-4">
+    return `<div class="product col col-sm-12 col-md-6 col-lg-4">
             <div class="card">
                 <img class="" src='/static/img/${product.imageName}' alt=""/>
                 <div class="card-header">
@@ -94,11 +101,24 @@ function createProductElement(product) {
                         <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add-product" data-id="${product.id}">Add to cart</a>
                     </div>
                 </div>
             </div>
         </div>`;
+}
+
+async function addProductToCart(event) {
+    const productId = event.currentTarget.getAttribute("data-id");
+    await dataHandler.addProductToCart(productId);
+    await refreshCartItemCount();
+}
+
+async function refreshCartItemCount() {
+    const cartItemCount = document.querySelector(".cart-item-count");
+    const cart = await dataHandler.getCart();
+    const cartItems = cart["cartItems"];
+    cartItemCount.textContent = cartItems.length;
 }
 
 main();

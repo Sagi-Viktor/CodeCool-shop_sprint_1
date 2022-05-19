@@ -1,5 +1,6 @@
 package com.codecool.shop.controller.api;
 
+import com.codecool.shop.controller.CodecoolShopUtil;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
@@ -51,20 +52,9 @@ public class GetProducts extends HttpServlet {
     private List<Integer> getQueryParamValue(HttpServletRequest request, String queryParameter) {
         Optional<String> queryParameterValue = Optional.ofNullable(request.getParameter(queryParameter));
         return Arrays.stream(queryParameterValue.orElse("").split(","))
-                .filter(this::isNumeric)
+                .filter(CodecoolShopUtil::isNumeric)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
     }
 
-    private boolean isNumeric(String str) {
-        if (str == null) {
-            return false;
-        }
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 }
