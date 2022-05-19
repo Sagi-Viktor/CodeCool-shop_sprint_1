@@ -13,6 +13,15 @@ async function main() {
     const cartItemsData = await dataHandler.getItemsFromCart();
     cart.innerHTML = createCartItemsDiv(cartItemsData);
     addCartItemInputsEventListener();
+
+    const cartItemsRemove = document.querySelectorAll(".cart-item-remove");
+    cartItemsRemove.forEach(item => item.addEventListener("click", removeItemFromCart));
+}
+
+async function removeItemFromCart(event) {
+    const item = event.currentTarget;
+    const productId = item.getAttribute("data-product-id");
+    await dataHandler.removeItemFromCart(productId);
 }
 
 async function editCart(event) {
@@ -20,8 +29,7 @@ async function editCart(event) {
     const productId = input.getAttribute("data-product-id");
     const quantity = input.value;
     const cartItemsData = await dataHandler.editCart(productId, quantity);
-    console.log(cartItemsData);
-    cart.innerHTML = createCartItemsDiv(cartItemsData);
+    // cart.innerHTML = createCartItemsDiv(cartItemsData);
     addCartItemInputsEventListener();
 }
 
@@ -38,6 +46,7 @@ function createCartItemsDiv(cartItems) {
             <small>${supplier["name"]}</small><br>
             <p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p>
             ${createQuantitySelect(product["id"], cartItem["quantity"])}
+            <small class="cart-item-remove" data-product-id="${product["id"]}"><a href="">Remove</a></small>
     </div>
         `;
         totalPrice += parseFloat(product["defaultPrice"]) * parseFloat(cartItem["quantity"]);
