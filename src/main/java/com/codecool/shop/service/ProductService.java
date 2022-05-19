@@ -36,6 +36,9 @@ public class ProductService {
     }
 
     public int countAvailableProducts(int categoryId, List<Supplier> selectedSuppliers) {
+        if (selectedSuppliers.isEmpty()) {
+            return productCategoryDao.find(categoryId).getNumberOfProducts();
+        }
         int numberOfProducts = 0;
         for (Supplier supplier : selectedSuppliers) {
             numberOfProducts += supplier.getProducts().stream()
@@ -75,7 +78,9 @@ public class ProductService {
 
     public List<Product> getProductsByFilter(List<Integer> categoryIds, List<Supplier> selectedSuppliers) {
         List<ProductCategory> selectedCategories = getProductCategories(categoryIds);
-        return (!selectedCategories.isEmpty()) ? getProductsByCategoriesAndSuppliers(selectedCategories, selectedSuppliers) : this.getProductsBySuppliers(selectedSuppliers);
+        return (!selectedCategories.isEmpty()) ?
+                getProductsByCategoriesAndSuppliers(selectedCategories, selectedSuppliers) :
+                this.getProductsBySuppliers(selectedSuppliers);
     }
 
     public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
