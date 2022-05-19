@@ -60,3 +60,26 @@
 {
     margin: 0 0 11px;
 }
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#products {
+    max-width: 60%;
+}
+
+body {
+    margin: 0;
+}
+
+.card-header {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+ul {
+    list-style: none;
+}
