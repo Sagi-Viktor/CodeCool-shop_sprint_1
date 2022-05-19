@@ -6,6 +6,7 @@ public class CartItem {
 
     private final Product product;
     private int quantity;
+    private static final int MAX_QUANTITY = 10;
 
     public CartItem(Product product, int quantity) {
         this.product = product;
@@ -21,7 +22,7 @@ public class CartItem {
     }
 
     public void increaseQuantity() {
-        if (quantity < 10) {
+        if (quantity < MAX_QUANTITY) {
             quantity++;
         }
     }
@@ -31,7 +32,7 @@ public class CartItem {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        this.quantity = Math.min(quantity, MAX_QUANTITY);
     }
 
     public BigDecimal getPrice() {
