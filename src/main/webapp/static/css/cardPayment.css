@@ -1,0 +1,18 @@
+html {
+    background: url(/static/img/BC.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.card-container {
+    width: 600px;
+    border: 3px solid black;
+    background: indianred;
+    margin-inline: auto;
+    margin-top: 10%;
+    padding: 30px;
+    border-radius: 25px;
+}
+
