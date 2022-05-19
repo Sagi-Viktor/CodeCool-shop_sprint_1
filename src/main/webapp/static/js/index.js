@@ -1,12 +1,14 @@
 import {dataHandler} from "./dataHandler.js";
 
-const attributes = {
-    id: "value",
-}
+
 const htmlElements = {
     categories: document.querySelector("ul#category-list"),
     suppliers: document.querySelector("ul#supplier-list"),
     productContainer: document.querySelector("div#products"),
+}
+
+function main() {
+    addEventListeners();
 }
 
 function addEventListeners() {
@@ -22,7 +24,7 @@ function getSelectedIds(checkBoxList) {
     checkBoxList.querySelectorAll("li input")
         .forEach(checkBox => {
             if (checkBox.checked) {
-                idList.push(checkBox.getAttribute(attributes.id));
+                idList.push(checkBox.getAttribute("value"));
                 checkBox.setAttribute("data-checked", "true");
             } else {
                 checkBox.setAttribute("data-checked", "false");
@@ -34,17 +36,28 @@ function getSelectedIds(checkBoxList) {
 function changeCheckboxAvailability(numberOfProductsInCategories) {
     disableAllCategoryCheckbox();
     htmlElements.categories.querySelectorAll("label.checkbox-label").forEach(checkboxLabel => {
-        let checkbox = checkboxLabel.children.namedItem("category-filter");
-        let numberOfProducts = checkboxLabel.querySelector("em");
-        for (let [categoryValue, numberOfAvailableProducts] of Object.entries(numberOfProductsInCategories)) {
-            if (checkbox.disabled === true && categoryValue === checkbox.value) {
-                checkbox.disabled = false;
-                numberOfProducts.innerHTML = numberOfAvailableProducts;
-            }
-        }
+        changeCheckboxCondition(checkboxLabel, numberOfProductsInCategories);
         // if (checkbox.disabled) {numberOfProducts.innerHTML = '0';}
-        if (checkbox.getAttribute("data-checked") === "true" && checkbox.disabled) {checkbox.checked = false;}
+        changeCheckboxCheckedCondition(checkboxLabel);
     });
+}
+
+function changeCheckboxCondition(checkboxLabel, numberOfProductsInCategories) {
+    let checkbox = checkboxLabel.children.namedItem("category-filter");
+    let numberOfProducts = checkboxLabel.querySelector("em");
+    for (let [categoryValue, numberOfAvailableProducts] of Object.entries(numberOfProductsInCategories)) {
+        if (checkbox.disabled === true && categoryValue === checkbox.value) {
+            checkbox.disabled = false;
+            numberOfProducts.innerHTML = numberOfAvailableProducts;
+        }
+    }
+}
+
+function changeCheckboxCheckedCondition(checkboxLabel) {
+    let checkbox = checkboxLabel.children.namedItem("category-filter");
+    if (checkbox.getAttribute("data-checked") === "true" && checkbox.disabled) {
+        checkbox.checked = false;
+    }
 }
 
 function disableAllCategoryCheckbox() {
@@ -57,7 +70,14 @@ async function refreshProducts() {
     const refreshedProducts = await dataHandler.getProducts(supplierIdList, categoryIdList);
     changeCheckboxAvailability(refreshedProducts.numberOfProductsInCategories);
     changeProducts(refreshedProducts.productsByFilter);
-    console.log(refreshedProducts);
+}
+
+function changeProducts(products) {
+    htmlElements.productContainer.innerHTML = "";
+    for (const product of products) {
+        const element = createProductElement(product);
+        htmlElements.productContainer.insertAdjacentHTML("beforeend", element);
+    }
 }
 
 function createProductElement(product) {
@@ -81,13 +101,4 @@ function createProductElement(product) {
         </div>`;
 }
 
-function changeProducts(products) {
-    htmlElements.productContainer.innerHTML = "";
-    for (const product of products) {
-        const element = createProductElement(product)
-        htmlElements.productContainer.insertAdjacentHTML("beforeend", element)
-    }
-}
-
-
-addEventListeners();
+main();
