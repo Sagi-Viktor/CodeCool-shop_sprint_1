@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/paymentCreditcard.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/cardPayment.css">
+</head>
+
+<body>
+    <div class="bc">
+        <div class="card-container">
+            <form action="/checkout/payment/creditcard" method="post">
+                <div class="card-num-container">
+                    <label for="card-num-1">Card number</label>
+                    <input class="card-number" type="text" name="card-num-1" id="card-num-1" size="5" pattern="\d{4}" required>
+                    <sp>-</sp>
+                    <input class="card-number" type="text" name="card-num-2" size="5" pattern="\d{4}" required>
+                    <sp>-</sp>
+                    <input class="card-number" type="text" name="card-num-3" size="5" pattern="\d{4}" required>
+                    <sp>-</sp>
+                    <input class="card-number" type="text" name="card-num-4" size="5" pattern="\d{4}" required>
+                </div>
+
+                <div class="exp-date-container">
+                    <label for="expiration-date">Exp. date</label>
+                    <input class="expiration-date" type="text" name="expiration-date-1" id="expiration-date" size="2" pattern="\d{2}" required>
+                    <sp>/</sp>
+                    <input class="expiration-date" type="text" name="expiration-date-2" size="2" pattern="\d{2}" required>
+                </div>
+
+                <div class="card-holder-name-container">
+                    <label for="card-holder">Name on card</label>
+                    <input class="card-holder" type="text" name="card-holder" id="card-holder" required>
+                </div>
+
+                <div class="cvv-code-container">
+                    <label for="cvv-code">CVV</label>
+                    <input class="cvv-code" type="password" name="cvv-code" id="cvv-code" pattern="\d{3}" required>
+                </div>
+                <button type="submit">Pay now</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
