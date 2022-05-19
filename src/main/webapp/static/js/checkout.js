@@ -1,24 +1,28 @@
 const checkout = {
     init(){
-        this.checkConfirmEmail();
+        this.confirmEmail();
     },
 
-    checkConfirmEmail(){
+    confirmEmail(){
         let confirmInputField = document.querySelector("#email-confirmation");
-        confirmInputField.addEventListener("input", this.confirmEmailEventListener)
-    },
+        confirmInputField.addEventListener("input", confirmEmailEventListener);
 
-    confirmEmailEventListener(e){
-        let providedEmail = document.querySelector("#email").value;
-        let container = document.querySelector(".email-match");
-        container.removeAttribute("hidden");
-        if (!(providedEmail === e.currentTarget.value)){
-            container.innerText = "Emails are not match!!"
+    function confirmEmailEventListener(e){
+            let providedEmail = document.querySelector("#email").value;
+            let container = document.querySelector(".email-match");
+            let submitButton = document.querySelector("#submit-button");
+            container.removeAttribute("hidden");
+
+            if (!(providedEmail === e.currentTarget.value)){
+                container.innerText = "Emails are not match!!";
+                submitButton.setAttribute("disabled", "");
+            }
+            if (providedEmail === e.currentTarget.value){
+                container.innerText = "Emails match!";
+                submitButton.removeAttribute("disabled");
+            }
         }
-        if (providedEmail === e.currentTarget.value){
-            container.innerText = "Emails match!"
-        }
-    }
+    },
 
 }
 
