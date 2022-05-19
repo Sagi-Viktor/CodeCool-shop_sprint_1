@@ -52,8 +52,6 @@ public class CheckoutController extends HttpServlet {
             orderModel.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
 
-        System.out.println(orderModel.getLastName());
-
         orderDaoJson.add(orderModel);
         switch (paymentType) {
             case "paypal":

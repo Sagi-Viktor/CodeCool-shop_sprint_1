@@ -36,11 +36,11 @@ public class OrderModel {
     }
 
     public void addBillingAddress(String billingCountry, String billingState, String billingZipCode, String billingStreet, String billingHouseNumber) {
-        this.billingCountry = country;
-        this.billingState = state;
-        this.billingZipCode = zipCode;
-        this.billingStreet = street;
-        this.billingHouseNumber = houseNumber;
+        this.billingCountry = billingCountry;
+        this.billingState = billingState;
+        this.billingZipCode = billingZipCode;
+        this.billingStreet = billingStreet;
+        this.billingHouseNumber = billingHouseNumber;
     }
 
     public String getLastName() {
