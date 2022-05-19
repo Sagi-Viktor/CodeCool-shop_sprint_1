@@ -23,7 +23,6 @@ public class AddToCartAPI extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject requestObject = JsonUtil.getRequestJsonObject(req);
         int productId = requestObject.get("productId").getAsInt();
-        System.out.println(productId);
 
         CartDao cart = CartDaoMem.getInstance();
         ProductDao productStore = ProductDaoMem.getInstance();
