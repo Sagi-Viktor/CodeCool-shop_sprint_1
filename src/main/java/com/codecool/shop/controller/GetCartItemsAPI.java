@@ -18,7 +18,8 @@ public class GetCartItemsAPI  extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cart = CartDaoMem.getInstance();
         var cartItems = cart.getAll();
-        String cartItemsJson = new Gson().toJson(cartItems);
+
+        var cartItemsJson = new Gson().toJson(cartItems);
         resp.getWriter().println(cartItemsJson);
     }
 }

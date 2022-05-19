@@ -2,16 +2,16 @@ package com.codecool.shop.model;
 
 public class CartItem {
 
-    private final int productId;
+    private final Product product;
     private int quantity;
 
-    public CartItem(int productId, int quantity) {
-        this.productId = productId;
+    public CartItem(Product product, int quantity) {
+        this.product = product;
         this.quantity = quantity;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
     public int getQuantity() {
@@ -26,4 +26,7 @@ public class CartItem {
         quantity--;
     }
 
+    public int getProductId() {
+        return this.product.getId();
+    }
 }
