@@ -35,14 +35,14 @@ function changeCheckboxAvailability(numberOfProductsInCategories) {
     disableAllCategoryCheckbox();
     htmlElements.categories.querySelectorAll("label.checkbox-label").forEach(checkboxLabel => {
         let checkbox = checkboxLabel.children.namedItem("category-filter");
-        let numberOfProducts = checkboxLabel.querySelector("em.actual-product-number");
+        let numberOfProducts = checkboxLabel.querySelector("em");
         for (let [categoryValue, numberOfAvailableProducts] of Object.entries(numberOfProductsInCategories)) {
             if (checkbox.disabled === true && categoryValue === checkbox.value) {
                 checkbox.disabled = false;
                 numberOfProducts.innerHTML = numberOfAvailableProducts;
             }
         }
-        if (checkbox.disabled) {numberOfProducts.innerHTML = '0';}
+        // if (checkbox.disabled) {numberOfProducts.innerHTML = '0';}
         if (checkbox.getAttribute("data-checked") === "true" && checkbox.disabled) {checkbox.checked = false;}
     });
 }

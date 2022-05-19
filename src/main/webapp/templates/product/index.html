@@ -49,7 +49,7 @@
                         <input type="checkbox" name="supplier-filter" th:value="${sup.id}">
                         <span>
                             <a th:text="${sup.name}"></a>
-                            <em th:text="${sup.numberOfProductCategories}"></em>/
+<!--                            <em th:text="${sup.numberOfProductCategories}"></em>/-->
                             <em th:text="${sup.numberOfProducts}"></em>
                         </span>
                     </label>
@@ -64,8 +64,8 @@
                         <input type="checkbox" name="category-filter" th:value="${cat.id}">
                         <span>
                             <a th:text="${cat.name}"></a>
-                            <em th:text="${cat.numberOfProducts}"></em>/
-                            <em class="actual-product-number">0</em>
+                            <em th:text="${cat.numberOfProducts}"></em>
+<!--                            <em class="actual-product-number">0</em>-->
                         </span>
                     </label>
                 </li>
