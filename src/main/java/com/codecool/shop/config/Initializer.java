@@ -50,6 +50,8 @@ public class Initializer implements ServletContextListener {
         ProductCategory family = addProductCategory("Family", "Board game", "Family category", hasbroGaming);
         ProductCategory luck = addProductCategory("Luck", "Board game", "Luck category", hasbroGaming);
         ProductCategory expansion = addProductCategory("Expansion", "Board game expansions", "expansions for other base games", treeTurtle);
+        ProductCategory adult = addProductCategory("Adult", "Adult Board Game", "Board games Only for adults!", treeTurtle);
+        ProductCategory other = addProductCategory("Other", "Other products","Some other products", treeTurtle);
 
 
 //        ProductCategory tablet = addProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.", amazon, lenovo);
@@ -183,6 +185,133 @@ public class Initializer implements ServletContextListener {
                 cooperative,
                 family,
                 expansion
+        );
+        addProduct(
+                "TeeTurtle Unstable Unicorns Adventures Expansion Pack",
+                "15",
+                "USD",
+                treeTurtle,
+                "TeeTurtle_Unstable:_Adventures_Expansion_Pack.jpg",
+                "     Unstable Unicorns Adventures Expansion Pack is designed to be added to your Unstable Unicorns Card Game (or Unstable Unicorns NSFW Card Game)\n" +
+                        "    New adventures await in this expansion, featuring new characters, magic cards, upgrades, and downgrades\n" +
+                        "    Unstable Unicorns is a strategic card game that will destroy your friendships but in a good way\n" +
+                        "    The game was one of Kickstarter’s top 100 most backed projects of all time and has sold over a million copies worldwide. Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year\n" +
+                        "    This highly giftable expansion pack contains 54 cards and is recommended for ages 14+\n" +
+                        "    Number of players: 2-8",
+                expansion,
+                luck,
+                cooperative,
+                family
+        );
+        addProduct(
+                "Unstable Unicorns: Nightmares Expansion",
+                "15",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns:_Nightmares_Expansion.jpg",
+                " Don't be a Halloweenie! This expansion is dripping with your favorite horror tropes and spooks (and of course, lots of unicorns!)\n" +
+                        "Unstable Unicorns Nightmares Expansion Pack is designed to be added to your Unstable Unicorns Card Game (or Unstable Unicorns NSFW Card Game)\n" +
+                        "This pack includes new Characters cards, Magic cards, Upgrade cards, and Nightmare Downgrade cards.\n" +
+                        "Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year, was one of Kickstarter’s top 100 most backed projects of all time, and has sold over a million copies worldwide!\n" +
+                        "This highly giftable expansion pack contains 54 cards and is recommended for ages 14+\n" +
+                        "Number of players: 2-8",
+                expansion,
+                luck,
+                cooperative,
+                family
+        );
+        addProduct(
+                "Unstable Unicorns: Vinyl Mini Blind Box Collection",
+                "200",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns:_Vinyl_Mini_Blind_Box_Collection.jpg",
+                " Your favorite Unstable Unicorns have been turned into vinyl mini figures!\n" +
+                        "Each blind box contains a surprise character and an Unstable Unicorns promo card featuring new artwork\n" +
+                        "Find 8 characters you know and love and 2 brand new mystery characters\n" +
+                        "Collect them one by one, or get the pack of 18 and you’re guaranteed to find all 10 figures!",
+                other,
+                expansion
+        );
+        addProduct(
+                "Unstable Unicorns Christmas Special Expansion Pack ",
+                "15",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns_Christmas_Special_Expansion_Pack .jpg",
+                "Unstable Unicorns Christmas Special Expansion Pack is designed to be added to your Unstable Unicorns Card Game (or Unstable Unicorns NSFW Card Game).\n" +
+                        "This pack includes holiday-themed characters, magic cards, upgrades, and downgrades.\n" +
+                        "Unstable Unicorns is a strategic card game that will destroy your friendships...but in a good way.\n" +
+                        "The game was one of Kickstarter’s top 100 most backed projects of all time and has sold over a million copies worldwide. Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year.\n" +
+                        "This highly giftable expansion pack contains 36 cards and is recommended for ages 8+",
+                expansion,
+                luck,
+                cooperative,
+                family);
+        addProduct(
+                "Unstable Unicorns Not Safe For Work (NSFW) Expansion Pack",
+                "14.33",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns_Not_Safe_For_Work_(NSFW)_Expansion_Pack.jpg",
+                "Unstable Unicorns NSFW Expansion Pack is designed to be added to your Unstable Unicorns Card Game.\n" +
+                        "This pack includes NSFW characters, magic cards, upgrades, and downgrades for people with dirty minds.\n" +
+                        "Unstable Unicorns is a strategic card game that will destroy your friendships...but in a good way.\n" +
+                        "The game was one of Kickstarter’s top 100 most backed projects of all time and has sold over a million copies worldwide.\n" +
+                        "Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year. This highly giftable expansion pack contains 54 cards and is for ages 21+.",
+                expansion,
+                luck,
+                cooperative,
+                adult
+        );
+        addProduct(
+                "Unstable Unicorns NSFW Card Game - A strategic card game and party game for adults with drinking rules available (for ages 21+)",
+                "69.69",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns_NSFW.jpg",
+                "The NSFW edition of Unstable Unicorns is still a strategic game that will destroy your friendships in a hilariously offensive way. Horrify your friends. Abandon them. Unicorns don’t judge.\n" +
+                        "The game features the same style of gameplay as the beloved Unstable Unicorns, just a bit...dirtier.\n" +
+                        "Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year.\n" +
+                        "This highly giftable game takes 30–45 minutes to play and is for 2–8 players (ages 21+).\n" +
+                        "The box contains 135 NSFW cards and a rule book (plus optional drinking and stripping rules) and features a magnetic closure. This game is fully playable on its own, and any expansion pack can be added to it.",
+                expansion,
+                adult,
+                luck,
+                cooperative
+        );
+        addProduct(
+                "Unstable Unicorns Unicorns of Legend Expansion Pack",
+                "15",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns:_Unicorns_of_Legend_Expansion_Pack.jpg",
+                "Unstable Unicorns Unicorns of Legend Expansion Pack is designed to be added to your Unstable Unicorns Card Game (or Unstable Unicorns NSFW Card Game).\n" +
+                        "This pack includes fantasy-themed characters, magic cards, upgrades, and downgrades for explorers and adventurers.\n" +
+                        "Unstable Unicorns is a strategic card game that will destroy your friendships...but in a good way.\n" +
+                        "The game was one of Kickstarter’s top 100 most backed projects of all time and has sold over a million copies worldwide.\n" +
+                        "Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year. This highly giftable expansion pack contains 54 cards and is recommended for ages 14+",
+                expansion,
+                family,
+                cooperative,
+                luck
+        );
+        addProduct(
+                "Unstable Unicorns Kids Edition",
+                "15",
+                "USD",
+                treeTurtle,
+                "Unstable_Unicorns:_Kids_Edition .jpg",
+                "Introduce younger players to a magical world of unicorns and strategy games with Unstable Unicorns for Kids!\n" +
+                        "Take turns collecting Unicorns and using Magic. The first person to collect 7 Unicorns wins the game!\n" +
+                        "Unstable Unicorns for Kids is a 2-6 player game for ages 6+ that features brand new characters and adorable artwork that kids will love! The duration of one game is 15-45 minutes.\n" +
+                        "The charming game box includes 32 Colorful Unicorn cards, 8 Baby Unicorn cards, 32 Magic cards, and 8 Neigh cards.\n" +
+                        "This highly giftable game contains 80 cards and 1 rule book.\n" +
+                        "Unstable Unicorns won the 2019 People’s Choice Award for Toy of the Year, was one of Kickstarter’s top 100 most backed projects of all time, and has sold over a million copies worldwide!",
+                educational,
+                luck,
+                family,
+                cooperative
         );
 
 
