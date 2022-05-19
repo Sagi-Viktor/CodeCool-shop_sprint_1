@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class OrderDaoJson implements OrderDao {
 
-    private String filePathBeginning = "/home/sagi-viktor/codecool/oop-module/27_codecool-shop-1-java-dudaskobendeguz/src/main/resources/order-";
+    private String filePathBeginning = "src/main/resources/order-";
     private String extension = ".json";
 
     @Override
@@ -22,7 +22,7 @@ public class OrderDaoJson implements OrderDao {
         try {
             File file = new File(fileName);
             file.createNewFile();
-            FileWriter fileWriter =  new FileWriter(fileName);
+            FileWriter fileWriter =  new FileWriter(file.getAbsolutePath());
             gson.toJson(orderModel, fileWriter);
             fileWriter.close();
         } catch (IOException e) {
