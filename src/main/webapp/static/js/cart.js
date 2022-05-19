@@ -16,7 +16,7 @@ async function refreshCartItems() {
 }
 
 function createCartItemsDiv(cartItems) {
-    if (!cartItems.length) return '';
+    if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
     let totalPrice = 0;
     let cartItemsDiv = ``;
