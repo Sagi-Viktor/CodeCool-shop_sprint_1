@@ -16,26 +16,10 @@ async function refreshCartItems() {
 }
 
 function createCartTable(cart) {
-    // TODO Refactor this, get total price from server
     const cartItems = cart["cartItems"];
     if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
-    let tableBody = ``;
-    for (let cartItem of cartItems) {
-        const product = cartItem["product"];
-        tableBody += `
-            <tr class="cart-item">
-                <td><img src="${"/static/img/" + product["imageName"]}" alt=""></td>
-                <td>
-                    <h3>${product["name"]}</h3>
-                    <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
-                </td>
-                <td><p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p></td>
-                <td>${createQuantitySelect(product["id"], cartItem["quantity"])}</td>
-                <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
-            </tr>
-        `;
-    }
+    let tableBody = createCartTableBody(cartItems);
     return `
     <table>
         <thead>
@@ -53,6 +37,26 @@ function createCartTable(cart) {
     </table>
     <p id="total-price">Total price: ${cart["totalPrice"]} ${currency}</p>
     `;
+}
+
+function createCartTableBody(cartItems) {
+    let tableBody = ``;
+    for (let cartItem of cartItems) {
+        const product = cartItem["product"];
+        tableBody += `
+            <tr class="cart-item">
+                <td><img src="${"/static/img/" + product["imageName"]}" alt=""></td>
+                <td>
+                    <h3>${product["name"]}</h3>
+                    <small class="cart-item-remove" data-product-id="${product["id"]}"><a>Remove</a></small>
+                </td>
+                <td><p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p></td>
+                <td>${createQuantitySelect(product["id"], cartItem["quantity"])}</td>
+                <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
+            </tr>
+        `;
+    }
+    return tableBody;
 }
 
 function createQuantitySelect(cartItemId, quantity) {
