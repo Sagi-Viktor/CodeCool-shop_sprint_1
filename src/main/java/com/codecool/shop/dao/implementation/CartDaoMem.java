@@ -34,6 +34,11 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
+    public void removeAll() {
+        this.data = new HashSet<>();
+    }
+
+    @Override
     public Set<CartItem> getAll() {
         return data;
     }
