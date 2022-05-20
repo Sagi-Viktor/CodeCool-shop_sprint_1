@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class CartDaoMem implements CartDao {
 
-    private final Set<CartItem> data = new HashSet<>();
+    private Set<CartItem> data = new HashSet<>();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
