@@ -25,13 +25,14 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "getSelectedProducts", urlPatterns = {"/api/products"}, loadOnStartup = 2)
 public class GetProducts extends HttpServlet {
+    private final SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private final ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private final ProductDao productDataStore = ProductDaoMem.getInstance();
+    private final ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDataStore);
         PrintWriter out = response.getWriter();
 
         List<Integer> supplierIds = getQueryParamValue(request, "supplier_id");

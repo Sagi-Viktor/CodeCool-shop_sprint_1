@@ -48,130 +48,6 @@ public class Initializer implements ServletContextListener {
         //setting up products and printing it
         {
             addProduct(
-                    "The Broken Token Expansion Full Organizer Compatible with Terraforming Mars",
-                    "87.98",
-                    "USD",
-                    phobolog,
-                    "The_Broken_Token_Expansion_Full_Organizer_Compatible_with_Terraforming_Mars .jpg",
-                    " EFFICIENT STORAGE AND EASY SETUP - Has 5 player trays, 2 resource trays, a tile tray, card “shoe” that will hold both drawing and discarded player cards, and 3 individual card trays for Corporation, Prelude, and Global Events. Store everything in its own place, significantly cutting down setup time, and keeping your game organized on the table while you play.\n" +
-                            "ROOM FOR EXPANSIONS - Hellas and Elysium, Venus Next, Prelude, Colonies, and Turmoil.\n" +
-                            "SUPPORTS SLEEVED CARDS\n" +
-                            "HIGH-QUALITY MATERIALS - Made of laser-cut baltic birch plywood, acrylic, and MDF. Our organizers are designed to last the lifetime of your game (assembly required).\n" +
-                            "Unofficial Organizer with Terraforming Mars + expansions by Stronghold Games.",
-                    other
-            );
-            addProduct(
-                    "Terraforming Mars Prelude",
-                    "19.84",
-                    "USD",
-                    phobolog,
-                    "Terraforming_Mars_Prelude .jpg",
-                    "Terraforming Mars: Prelude is a small expansion that attempts to speed up the game." +
-                            " Its main additions are prelude cards that give players additional resources and production to start the game." +
-                            " The expansion also includes a few new corporations and project cards.",
-                    educational,
-                    expansion,
-                    euroGame,
-                    luck,
-                    strategy
-            );
-            addProduct(
-                    "Terraforming Mars Hellas & Elysium The Other Side of Mars Expansion",
-                    "19.95",
-                    "USD",
-                    phobolog,
-                    "Terraforming_Mars_Hellas_&_Elysium_The_Other_Side_of_Mars_Expansion .jpg",
-                    " Two new areas, and many new ways to win\n" +
-                            "Hellas, the southern wild, includes Mars' south pole and the enormous seven-hex Hellas\n" +
-                            "Elysium takes players almost to the opposite side of Mars' equator, with vast lowlands for oceans\n" +
-                            "An expansion for Terraforming Mars",
-                    expansion,
-                    educational,
-                    family,
-                    luck,
-                    euroGame,
-                    strategy);
-            addProduct(
-                    "Stronghold Games Terraforming Mars Turmoil",
-                    "29.42",
-                    "USD",
-                    phobolog,
-                    "Stronghold_Games_Terraforming_Mars_Turmoil .jpg",
-                    " The 5th expansion to the #4 ranked game of all time on board game Geek\n" +
-                            "Terraforming Mars is a smash-hit game, and the hottest game overall in hobby board games since 2016.\n" +
-                            "Terraforming Mars: turmoil is an \"expert\" Expansion, which will increase the game experience for hard core players of this game.\n" +
-                            "The new card Type, global events, can help or hinder players, based on whether they have paid attention to the changing political climate on Mars.\n" +
-                            "New corporations and new project cards are included as well for those long-time players of the base game.",
-                    expansion,
-                    educational,
-                    family,
-                    strategy,
-                    luck,
-                    euroGame
-            );
-            addProduct(
-                    "Stronghold Games Terraforming Mars The Colonies",
-                    "29.95",
-                    "USD",
-                    phobolog,
-                    "Stronghold_Games_Terraforming_Mars_The_Colonies.jpg",
-                    "Terraforming Mars: Colonies, an expansion for Terraforming Mars that can be played with only the base game or with any combination of expansions," +
-                            " lets you visit the outer solar system. " +
-                            "It features colony tiles where you can build colonies and send your trade fleet. " +
-                            "It also includes new cards and corporations.",
-                    expansion,
-                    educational,
-                    family,
-                    strategy,
-                    luck
-            );
-            addProduct(
-                    "Stronghold Games Terraforming Mars Venus Next",
-                    "34.94",
-                    "USD",
-                    phobolog,
-                    "Stronghold_Games_Terraforming_Mars_Venus_Next.jpg",
-                    " Transforming Mars: Venus next, the second expansion to the smash-hit terraforming Mars, continues the journey of humanity as we terraform Earth's closest neighbor, Venus\n" +
-                            "Adding a side game board for the Planet Venus, additional tiles and tokens, and most importantly new Venus cards to add to the deck, you will be saying Venus next!\n" +
-                            "1 to 5 players\n" +
-                            "Ages 12 and up\n" +
-                            "90 - 120 minute game play",
-                    expansion,
-                    family,
-                    cooperative,
-                    luck,
-                    strategy
-            );
-            addProduct(
-                    "Stronghold Games Terraforming Mars Ares Expedition Card Game Collectors Edition",
-                    "37.39",
-                    "USD",
-                    phobolog,
-                    "Stronghold_Games_Terraforming_Mars_Ares_Expedition_Card_Game_Collectors_Edition.jpg",
-                    " Terraforming Mars: Ares Expedition is a faster version of the original with an optional co-op mode\n" +
-                            "For 1-4 players\n" +
-                            "Ages 14+\n" +
-                            "Game Time: 45-60 min",
-                    family,
-                    cooperative,
-                    creative,
-                    expansion,
-                    luck
-            );
-            addProduct(
-                    "Terraforming Mars",
-                    "65",
-                    "USD",
-                    phobolog,
-                    "Terraforming_Mars.jpg",
-                    "Corporations are competing to transform Mars into a habitable planet by spending vast resources and using innovative technology to raise temperature, create a breathable atmosphere, and make oceans of water. As terraforming progresses, more and more people will immigrate from Earth to live on the Red Planet.\n" +
-                            "In Terraforming Mars, you control a corporation with a certain profile. Play project cards, build up production, place your cities and green areas on the map, and race for milestones and awards! Will your corporation lead the way into humanity’s new era?",
-                    family,
-                    cooperative,
-                    creative,
-                    strategy
-            );
-            addProduct(
                     "Happy Little Dinosaurs Base Game", "20",
                     "USD",
                     teeTurtle,
@@ -678,6 +554,130 @@ public class Initializer implements ServletContextListener {
                             "    Whether your specialty is gaming, sarcasm, or animal puns, our t-shirts have you covered! (Get it? Covered? Cause t-shirts cover your body? Okay, we give up.)\n" +
                             "    Care instructions: Wash cold, tumble dry low, do not iron, and wear with pride!\n",
                     other
+            );
+            addProduct(
+                    "The Broken Token Expansion Full Organizer Compatible with Terraforming Mars",
+                    "87.98",
+                    "USD",
+                    phobolog,
+                    "The_Broken_Token_Expansion_Full_Organizer_Compatible_with_Terraforming_Mars .jpg",
+                    " EFFICIENT STORAGE AND EASY SETUP - Has 5 player trays, 2 resource trays, a tile tray, card “shoe” that will hold both drawing and discarded player cards, and 3 individual card trays for Corporation, Prelude, and Global Events. Store everything in its own place, significantly cutting down setup time, and keeping your game organized on the table while you play.\n" +
+                            "ROOM FOR EXPANSIONS - Hellas and Elysium, Venus Next, Prelude, Colonies, and Turmoil.\n" +
+                            "SUPPORTS SLEEVED CARDS\n" +
+                            "HIGH-QUALITY MATERIALS - Made of laser-cut baltic birch plywood, acrylic, and MDF. Our organizers are designed to last the lifetime of your game (assembly required).\n" +
+                            "Unofficial Organizer with Terraforming Mars + expansions by Stronghold Games.",
+                    other
+            );
+            addProduct(
+                    "Terraforming Mars Prelude",
+                    "19.84",
+                    "USD",
+                    phobolog,
+                    "Terraforming_Mars_Prelude .jpg",
+                    "Terraforming Mars: Prelude is a small expansion that attempts to speed up the game." +
+                            " Its main additions are prelude cards that give players additional resources and production to start the game." +
+                            " The expansion also includes a few new corporations and project cards.",
+                    educational,
+                    expansion,
+                    euroGame,
+                    luck,
+                    strategy
+            );
+            addProduct(
+                    "Terraforming Mars Hellas & Elysium The Other Side of Mars Expansion",
+                    "19.95",
+                    "USD",
+                    phobolog,
+                    "Terraforming_Mars_Hellas_&_Elysium_The_Other_Side_of_Mars_Expansion .jpg",
+                    " Two new areas, and many new ways to win\n" +
+                            "Hellas, the southern wild, includes Mars' south pole and the enormous seven-hex Hellas\n" +
+                            "Elysium takes players almost to the opposite side of Mars' equator, with vast lowlands for oceans\n" +
+                            "An expansion for Terraforming Mars",
+                    expansion,
+                    educational,
+                    family,
+                    luck,
+                    euroGame,
+                    strategy);
+            addProduct(
+                    "Stronghold Games Terraforming Mars Turmoil",
+                    "29.42",
+                    "USD",
+                    phobolog,
+                    "Stronghold_Games_Terraforming_Mars_Turmoil .jpg",
+                    " The 5th expansion to the #4 ranked game of all time on board game Geek\n" +
+                            "Terraforming Mars is a smash-hit game, and the hottest game overall in hobby board games since 2016.\n" +
+                            "Terraforming Mars: turmoil is an \"expert\" Expansion, which will increase the game experience for hard core players of this game.\n" +
+                            "The new card Type, global events, can help or hinder players, based on whether they have paid attention to the changing political climate on Mars.\n" +
+                            "New corporations and new project cards are included as well for those long-time players of the base game.",
+                    expansion,
+                    educational,
+                    family,
+                    strategy,
+                    luck,
+                    euroGame
+            );
+            addProduct(
+                    "Stronghold Games Terraforming Mars The Colonies",
+                    "29.95",
+                    "USD",
+                    phobolog,
+                    "Stronghold_Games_Terraforming_Mars_The_Colonies.jpg",
+                    "Terraforming Mars: Colonies, an expansion for Terraforming Mars that can be played with only the base game or with any combination of expansions," +
+                            " lets you visit the outer solar system. " +
+                            "It features colony tiles where you can build colonies and send your trade fleet. " +
+                            "It also includes new cards and corporations.",
+                    expansion,
+                    educational,
+                    family,
+                    strategy,
+                    luck
+            );
+            addProduct(
+                    "Stronghold Games Terraforming Mars Venus Next",
+                    "34.94",
+                    "USD",
+                    phobolog,
+                    "Stronghold_Games_Terraforming_Mars_Venus_Next.jpg",
+                    " Transforming Mars: Venus next, the second expansion to the smash-hit terraforming Mars, continues the journey of humanity as we terraform Earth's closest neighbor, Venus\n" +
+                            "Adding a side game board for the Planet Venus, additional tiles and tokens, and most importantly new Venus cards to add to the deck, you will be saying Venus next!\n" +
+                            "1 to 5 players\n" +
+                            "Ages 12 and up\n" +
+                            "90 - 120 minute game play",
+                    expansion,
+                    family,
+                    cooperative,
+                    luck,
+                    strategy
+            );
+            addProduct(
+                    "Stronghold Games Terraforming Mars Ares Expedition Card Game Collectors Edition",
+                    "37.39",
+                    "USD",
+                    phobolog,
+                    "Stronghold_Games_Terraforming_Mars_Ares_Expedition_Card_Game_Collectors_Edition.jpg",
+                    " Terraforming Mars: Ares Expedition is a faster version of the original with an optional co-op mode\n" +
+                            "For 1-4 players\n" +
+                            "Ages 14+\n" +
+                            "Game Time: 45-60 min",
+                    family,
+                    cooperative,
+                    creative,
+                    expansion,
+                    luck
+            );
+            addProduct(
+                    "Terraforming Mars",
+                    "65",
+                    "USD",
+                    phobolog,
+                    "Terraforming_Mars.jpg",
+                    "Corporations are competing to transform Mars into a habitable planet by spending vast resources and using innovative technology to raise temperature, create a breathable atmosphere, and make oceans of water. As terraforming progresses, more and more people will immigrate from Earth to live on the Red Planet.\n" +
+                            "In Terraforming Mars, you control a corporation with a certain profile. Play project cards, build up production, place your cities and green areas on the map, and race for milestones and awards! Will your corporation lead the way into humanity’s new era?",
+                    family,
+                    cooperative,
+                    creative,
+                    strategy
             );
         }
     }

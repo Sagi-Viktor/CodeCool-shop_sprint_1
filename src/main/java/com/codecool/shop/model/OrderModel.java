@@ -1,7 +1,7 @@
 package com.codecool.shop.model;
 
 public class OrderModel {
-
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,7 +18,7 @@ public class OrderModel {
     private String billingHouseNumber;
 
     public OrderModel(String firstName, String lastName, String email, String country, String state,
-                      String zipCode, String street, String houseNumber, String paymentType) {
+                      String zipCode, String street, String houseNumber, String paymentType, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -33,6 +33,7 @@ public class OrderModel {
         billingZipCode = zipCode;
         billingStreet = street;
         billingHouseNumber = houseNumber;
+        this.id = id;
     }
 
     public void addBillingAddress(String billingCountry, String billingState, String billingZipCode, String billingStreet, String billingHouseNumber) {
@@ -41,6 +42,10 @@ public class OrderModel {
         this.billingZipCode = billingZipCode;
         this.billingStreet = billingStreet;
         this.billingHouseNumber = billingHouseNumber;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getLastName() {

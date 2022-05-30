@@ -8,11 +8,12 @@ import java.util.stream.Collectors;
 
 public class CartDaoMem implements CartDao {
 
-    private final Set<CartItem> data = new HashSet<>();
+    private Set<CartItem> data = new HashSet<>();
     private static CartDaoMem instance = null;
+    private UUID id;
 
     private CartDaoMem() {
-
+        id = UUID.randomUUID();
     }
 
     public static CartDaoMem getInstance() {
@@ -33,6 +34,11 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
+    public void removeAll() {
+        this.data = new HashSet<>();
+    }
+
+    @Override
     public Set<CartItem> getAll() {
         return data;
     }
@@ -40,5 +46,10 @@ public class CartDaoMem implements CartDao {
     @Override
     public Optional<CartItem> find(int productId) {
         return data.stream().filter(item -> item.getProductId() == productId).findFirst();
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
     }
 }

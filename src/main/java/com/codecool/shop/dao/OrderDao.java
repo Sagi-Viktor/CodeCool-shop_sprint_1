@@ -6,10 +6,11 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OrderDao {
-    void add(OrderModel orderModel);
+    void add(OrderModel orderModel, UUID uuid);
     void update(OrderModel orderModel);
-    OrderModel get(int id);
+    OrderModel get(String id);
     List<OrderModel> getAll();
 }

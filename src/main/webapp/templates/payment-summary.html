@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cart</title>
+
+    <script src="static/js/cart.js" type="module" defer></script>
+    <link rel="stylesheet" type="text/css" href="static/css/cart.css">
+    <link rel="stylesheet" type="text/css" href="static/css/global.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>Good Job you pay for something, keep buying from us</h1>
+<p class="breadcrumb"><a href="/">Back to main page</a></p>
+<h1>Cart</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Product Name</th>
+        <th>Unit price</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="cart-item" th:each="cartItem: ${cartItems}">
+        <td><img th:src="'/static/img/' + ${cartItem.product.imageName}"></td>
+        <td>
+            <h3 th:text="${cartItem.product.name}"></h3>
+        </td>
+        <td><p th:text="${cartItem.product.defaultPrice} + ' ' + ${cartItem.product.defaultCurrency}"></p></td>
+        <td th:text="${cartItem.quantity}"></td>
+        <td th:text="${cartItem.product.defaultPrice * cartItem.quantity} + ' ' + ${cartItem.product.defaultCurrency}"></td>
+    </tr>
+    </tbody>
+</table>
+<p id="total-price" th:text="'Total price: ' + ${totalPrice} + 'USD'"></p>
 
 </body>
 </html>

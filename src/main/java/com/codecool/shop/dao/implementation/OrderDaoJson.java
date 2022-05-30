@@ -7,6 +7,10 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,9 +20,9 @@ public class OrderDaoJson implements OrderDao {
     private String extension = ".json";
 
     @Override
-    public void add(OrderModel orderModel) {
+    public void add(OrderModel orderModel, UUID uuid) {
         Gson gson = new Gson();
-        String fileName = filePathBeginning + UUID.randomUUID() + extension;
+        String fileName = filePathBeginning + uuid + extension;
         try {
             File file = new File(fileName);
             file.createNewFile();
@@ -36,7 +40,7 @@ public class OrderDaoJson implements OrderDao {
     }
 
     @Override
-    public OrderModel get(int id) {
+    public OrderModel get(String id) {
         return null;
     }
 
