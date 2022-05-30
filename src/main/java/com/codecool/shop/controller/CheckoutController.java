@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoJson;
 import com.codecool.shop.model.OrderModel;
 import org.thymeleaf.TemplateEngine;
@@ -28,6 +30,7 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        CartDao cartDaoMem = CartDaoMem.getInstance();
         OrderDaoJson orderDaoJson = new OrderDaoJson();
 
         String firstName = req.getParameter("first-name");
@@ -40,7 +43,7 @@ public class CheckoutController extends HttpServlet {
         String houseNumber = req.getParameter("house-number");
         String paymentType = req.getParameter("payment");
 
-        OrderModel orderModel = new OrderModel(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType);
+        OrderModel orderModel = new OrderModel(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartDaoMem.getId().toString());
 
         if (Optional.ofNullable(req.getParameter("same-address")).isEmpty()) {
             String billingCountry = req.getParameter("billing-country");
@@ -52,7 +55,7 @@ public class CheckoutController extends HttpServlet {
             orderModel.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
 
-        orderDaoJson.add(orderModel);
+        orderDaoJson.add(orderModel, cartDaoMem.getId());
         switch (paymentType) {
             case "paypal":
                 resp.sendRedirect("checkout/payment/paypal");

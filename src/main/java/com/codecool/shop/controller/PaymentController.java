@@ -43,6 +43,6 @@ public class PaymentController extends HttpServlet {
 
         }
         System.out.println("Payment Done");
-        engine.process("payment-summary.html", context, resp.getWriter());
+        resp.sendRedirect("/payment-summary");
     }
 }
