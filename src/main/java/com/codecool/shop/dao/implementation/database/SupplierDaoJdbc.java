@@ -5,10 +5,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,24 +26,36 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-        try (Connection connection = dataSource.getConnection()) {
-            String sqlQuery = "INSERT INTO suppliers(id, supplier_name, description, product_id, product_category_id) " +
-                    "VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, supplier.getId());
-            preparedStatement.setString(2, supplier.getName());
-            preparedStatement.setString(3, supplier.getDescription());
-            preparedStatement.setArray(4, (Array) supplier.getProductsIds());
-            preparedStatement.setArray(5, (Array) supplier.getProductCategoryIds());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException throwables) {
-            throw new RuntimeException("Error under add supplier to database: " + supplier, throwables);
-        }
+//        try (Connection connection = dataSource.getConnection()) {
+//            String sqlQuery = "INSERT INTO suppliers(id, supplier_name, description, product_id, product_category_id) " +
+//                    "VALUES (?, ?, ?, ?, ?)";
+//            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+//            preparedStatement.setInt(1, supplier.getId());
+//            preparedStatement.setString(2, supplier.getName());
+//            preparedStatement.setString(3, supplier.getDescription());
+//            preparedStatement.setArray(4, (Array) supplier.getProductsIds());
+//            preparedStatement.setArray(5, (Array) supplier.getProductCategoryIds());
+//            preparedStatement.executeUpdate();
+//
+//        } catch (SQLException throwables) {
+//            throw new RuntimeException("Error under add supplier to database: " + supplier, throwables);
+//        }
     }
 
     @Override
     public Supplier find(int id) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "SELECT * FROM suppliers WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+//            int id, String name, String description, List<Product> products, List<Integer> productCategoryIds
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under get supplier from database. searched id: " + id, throwables);
+        }
         return null;
     }
 
