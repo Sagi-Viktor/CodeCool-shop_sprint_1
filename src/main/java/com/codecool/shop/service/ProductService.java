@@ -7,9 +7,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -41,7 +39,8 @@ public class ProductService {
         }
         int numberOfProducts = 0;
         for (Supplier supplier : selectedSuppliers) {
-            numberOfProducts += supplier.getProducts().stream()
+            productDao.getProductsBySupplier(supplier);
+            numberOfProducts += productDao.getProductsBySupplier(supplier).stream()
                     .filter(product -> product.hasCategory(categoryId))
                     .count();
         }
@@ -54,12 +53,12 @@ public class ProductService {
 
     public List<Product> getProductsForCategory(int categoryId) {
         var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        return productDao.getProductsByCategory(category);
     }
 
     public List<Product> getProductsForCategory(String categoryName) {
         var category = productCategoryDao.find(categoryName);
-        return productDao.getBy(category);
+        return productDao.getProductsByCategory(category);
     }
 
     public List<Product> getAllProducts() {
@@ -85,8 +84,10 @@ public class ProductService {
     public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
         return suppliers.isEmpty() ? Set.copyOf(productCategoryDao.getAllId()) :
                 suppliers.stream()
-                        .map(Supplier::getProductCategoryIds)
-                        .flatMap(List::stream)
+                        .map(productDao::getProductsBySupplier)
+                        .flatMap(Collection::stream)
+                        .map(Product::getProductCategoryIds)
+                        .flatMap(Collection::stream)
                         .collect(Collectors.toSet());
     }
 
@@ -104,7 +105,7 @@ public class ProductService {
 
     public Set<Product> getProductsBySuppliers(List<Supplier> suppliers) {
         return  Set.copyOf(suppliers.stream()
-                .map(Supplier::getProducts)
+                .map(productDao::getProductsBySupplier)
                 .reduce(new ArrayList<>(), (arrayList, productList) -> {
                     arrayList.addAll(productList);
                     return arrayList;
@@ -113,10 +114,17 @@ public class ProductService {
 
     private Set<Product> getProductsByCategoriesAndSuppliers(List<ProductCategory> productCategories, List<Supplier> selectedSuppliers) {
         return productCategories.stream()
-                .map(productCategory ->  productDao.getBy(productCategory))
+                .map(productCategory ->  productDao.getProductsByCategory(productCategory))
                 .flatMap(List::stream)
                 .filter(product -> selectedSuppliers.isEmpty() || product.hasSupplier(selectedSuppliers))
                 .collect(Collectors.toSet());
     }
 
+    public Map<Supplier, Integer> getSuppliersWithProductCount() {
+        Map<Supplier, Integer> suppliersWithProductCount = new HashMap<>();
+        for (Supplier supplier : supplierDao.getAll()) {
+            suppliersWithProductCount.put(supplier, (int) productDao.getAll().stream().filter(product -> product.hasSupplier(supplier)).count());
+        }
+        return suppliersWithProductCount;
+    }
 }
