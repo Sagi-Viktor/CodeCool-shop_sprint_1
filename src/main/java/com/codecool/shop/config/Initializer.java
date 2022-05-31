@@ -522,7 +522,7 @@ public class Initializer implements ServletContextListener {
                     "8.99",
                     "USD",
                     teeTurtle,
-                    "Women's_Relaxed_Gaymer_T-Shirt .jpg",
+                    "Womens_Relaxed_Gaymer_T-Shirt .jpg",
                     "\n" +
                             "    100% Supersoft Ringspun Cotton\n" +
                             "    Made in the USA\n" +
