@@ -3,6 +3,7 @@ package com.codecool.shop.config;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
 import com.codecool.shop.dao.implementation.memory.SupplierDaoMem;
@@ -15,6 +16,10 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.math.BigDecimal;
 
+import org.postgresql.ds.PGSimpleDataSource;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
 @WebListener
 public class Initializer implements ServletContextListener {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -23,7 +28,12 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
+        try {
+            initDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         //setting up a new supplier
         Supplier hasbroGaming = addSupplier("Hasbro Gaming", "Board games");
         Supplier llc = addSupplier("LLC", "Exploding cittens distributor");
@@ -696,5 +706,28 @@ public class Initializer implements ServletContextListener {
 
     private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
+    }
+
+    private void initDatabase() throws SQLException {
+        DataSource dataSource = connect();
+        this.supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
+
+    }
+
+    private DataSource connect() throws SQLException {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        String dbName = System.getenv("DB_NAME");
+        String user = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
+
+        dataSource.setDatabaseName(dbName);
+        dataSource.setUser(user);
+        dataSource.setPassword(password);
+
+        System.out.println("Trying to connect");
+        dataSource.getConnection().close();
+        System.out.println("Connection ok.");
+
+        return dataSource;
     }
 }
