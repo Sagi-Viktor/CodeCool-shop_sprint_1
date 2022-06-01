@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
@@ -759,6 +760,7 @@ public class Initializer implements ServletContextListener {
         DataSource dataSource = connect(dbName, dbUserName, dbPassword);
         setupSuppliersIntoDataBase(dataSource);
         setupProductCategoriesIntoDataBase(dataSource);
+        setupProductsIntoDataBase(dataSource);
     }
 
     private void setupSuppliersIntoDataBase(DataSource dataSource) {
@@ -771,9 +773,14 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.getAll().forEach(productCategoryDaoJdbc::add);
     }
 
+    private void setupProductsIntoDataBase(DataSource dataSource) {
+        ProductDao productDaoJdbc = ProductDaoJdbc.getInstance(dataSource);
+        productDataStore.getAll().forEach(productDaoJdbc::add);
+    }
+
     private void initDatabase(String dbName, String dbUserName, String dbPassword) throws SQLException {
         DataSource dataSource = connect(dbName, dbUserName, dbPassword);
-        productDataStore = ProductDaoMem.getInstance();
+        productDataStore = ProductDaoJdbc.getInstance(dataSource);
         productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(dataSource);
         supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
         //TODO setup CartDaoJdbc
