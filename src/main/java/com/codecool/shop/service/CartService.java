@@ -17,13 +17,28 @@ public class CartService {
     }
 
 
+    public void createCart() {
+        //TODO add user id
+        cart = new Cart();
+    }
+
+    public void save() {
+        //TODO add user id
+        cartDao.add(cart);
+    }
+
+    public void load() {
+        //TODO add user id
+        cart = cartDao.get();
+    }
+
     public Cart getCart() {
+        if (cart == null) cart = new Cart();
         return cart;
     }
 
-    private BigDecimal getTotalPrice(Set<CartItem> cartItems) {
-        return cartItems.stream()
-                .map(CartItem::getPrice).reduce(new BigDecimal(0), BigDecimal::add);
+    public BigDecimal getTotalPrice() {
+        return cart.getTotalPrice();
     }
 
     public void addToCart(int productId) {
@@ -32,22 +47,25 @@ public class CartService {
     }
 
     public Set<CartItem> getAllCartItems() {
-        return cartDao.getAll();
+        if (cart == null) cart = new Cart();
+        return cart.getCartItems();
     }
 
     public UUID getId() {
-        return cartDao.getId();
+        return cart.getId();
     }
 
     public void setProductQuantity(int productId, int quantity) {
-        cartDao.find(productId).ifPresent(item -> item.setQuantity(quantity));
+        cart.setProductQuantity(productId, quantity);
     }
 
     public void removeAll() {
         cartDao.removeAll();
+        cart.removeAll();
     }
 
     public void remove(int productId) {
         cartDao.find(productId).ifPresent(cartDao::remove);
+        cart.remove(productId);
     }
 }
