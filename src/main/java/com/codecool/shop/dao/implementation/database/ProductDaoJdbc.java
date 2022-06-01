@@ -6,8 +6,10 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class ProductDaoJdbc implements ProductDao {
             preparedStatement.setInt(1, product.getId());
             preparedStatement.setString(2, product.getName());
             preparedStatement.setString(3, product.getDescription());
-            preparedStatement.setString(4, product.getPrice());
+            preparedStatement.setBigDecimal(4, product.getPriceToDB());
             preparedStatement.setString(5, product.getImageName());
             preparedStatement.setString(6, String.valueOf(product.getDefaultCurrency()));
             preparedStatement.setInt(7, product.getSupplier().getId());
