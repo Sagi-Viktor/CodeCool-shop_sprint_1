@@ -105,7 +105,28 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getProductsBySupplier(Supplier supplier) {
-        return null;
+        try (Connection connection = dataSource.getConnection()){
+            String sqlQuery = "SELECT * FROM products WHERE supplier_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, supplier.getId());
+            ResultSet resultSet = preparedStatement.executeQuery(sqlQuery);
+            List<Product> products = new ArrayList<>();
+
+            while (resultSet.next()){
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                BigDecimal price = resultSet.getBigDecimal(4);
+                String image_name = resultSet.getString(5);
+                String currency = resultSet.getString(6);
+                int supplier_id = resultSet.getInt(7);
+                //TODO extend query to get suppliers and categories
+//                products.add(new Product(name, price, currency, description, image_name));
+            }
+            return products;
+        } catch (SQLException msg) {
+            throw new RuntimeException("Error under get products by supplier from database. Supplier: " + supplier, msg);
+        }
     }
 
     @Override
