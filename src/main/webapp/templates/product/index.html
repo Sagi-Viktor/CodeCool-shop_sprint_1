@@ -44,13 +44,13 @@
         <div id="suppliers">
             <label for="supplier-list">Suppliers</label>
             <ul id="supplier-list">
-                <li th:each="sup: ${suppliers}">
+                <li th:each="supplierMap: ${suppliers}">
                     <label>
-                        <input type="checkbox" name="supplier-filter" th:value="${sup.id}">
+                        <input type="checkbox" name="supplier-filter" th:value="${supplierMap.key.id}">
                         <span>
-                            <a th:text="${sup.name}"></a>
+                            <a th:text="${supplierMap.key.name}"></a>
 <!--                            <em th:text="${sup.numberOfProductCategories}"></em>/-->
-                            <em th:text="${sup.numberOfProducts}"></em>
+                            <em th:text="${supplierMap.value}"></em>
                         </span>
                     </label>
                 </li>
@@ -59,12 +59,12 @@
         <div id="categories">
             <label for="category-list">Categories</label>
             <ul id="category-list">
-                <li th:each="cat: ${categories}">
+                <li th:each="categoryMap: ${categories}">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="category-filter" th:value="${cat.id}">
+                        <input type="checkbox" name="category-filter" th:value="${categoryMap.key.id}">
                         <span>
-                            <a th:text="${cat.name}"></a>
-                            <em th:text="${cat.numberOfProducts}"></em>
+                            <a th:text="${categoryMap.key.name}"></a>
+                            <em th:text="${categoryMap.value}"></em>
 <!--                            <em class="actual-product-number">0</em>-->
                         </span>
                     </label>

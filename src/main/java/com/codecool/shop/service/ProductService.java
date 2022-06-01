@@ -3,13 +3,13 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.BaseModel;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -37,29 +37,26 @@ public class ProductService {
 
     public int countAvailableProducts(int categoryId, List<Supplier> selectedSuppliers) {
         if (selectedSuppliers.isEmpty()) {
-            return productCategoryDao.find(categoryId).getNumberOfProducts();
+            return productDao.getProductsByCategory(productCategoryDao.find(categoryId)).size();
         }
         int numberOfProducts = 0;
         for (Supplier supplier : selectedSuppliers) {
-            numberOfProducts += supplier.getProducts().stream()
+            productDao.getProductsBySupplier(supplier);
+            numberOfProducts += productDao.getProductsBySupplier(supplier).stream()
                     .filter(product -> product.hasCategory(categoryId))
                     .count();
         }
         return numberOfProducts;
     }
 
-    public List<ProductCategory> getProductCategoryBySupplier(int supplierId) {
-        return productCategoryDao.getBySupplierId(supplierId);
-    }
-
     public List<Product> getProductsForCategory(int categoryId) {
         var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        return productDao.getProductsByCategory(category);
     }
 
     public List<Product> getProductsForCategory(String categoryName) {
         var category = productCategoryDao.find(categoryName);
-        return productDao.getBy(category);
+        return productDao.getProductsByCategory(category);
     }
 
     public List<Product> getAllProducts() {
@@ -85,8 +82,10 @@ public class ProductService {
     public Set<Integer> getAvailableCategories(List<Supplier> suppliers) {
         return suppliers.isEmpty() ? Set.copyOf(productCategoryDao.getAllId()) :
                 suppliers.stream()
-                        .map(Supplier::getProductCategoryIds)
-                        .flatMap(List::stream)
+                        .map(productDao::getProductsBySupplier)
+                        .flatMap(Collection::stream)
+                        .map(Product::getProductCategoryIds)
+                        .flatMap(Collection::stream)
                         .collect(Collectors.toSet());
     }
 
@@ -104,7 +103,7 @@ public class ProductService {
 
     public Set<Product> getProductsBySuppliers(List<Supplier> suppliers) {
         return  Set.copyOf(suppliers.stream()
-                .map(Supplier::getProducts)
+                .map(productDao::getProductsBySupplier)
                 .reduce(new ArrayList<>(), (arrayList, productList) -> {
                     arrayList.addAll(productList);
                     return arrayList;
@@ -113,10 +112,21 @@ public class ProductService {
 
     private Set<Product> getProductsByCategoriesAndSuppliers(List<ProductCategory> productCategories, List<Supplier> selectedSuppliers) {
         return productCategories.stream()
-                .map(productCategory ->  productDao.getBy(productCategory))
+                .map(productCategory ->  productDao.getProductsByCategory(productCategory))
                 .flatMap(List::stream)
                 .filter(product -> selectedSuppliers.isEmpty() || product.hasSupplier(selectedSuppliers))
                 .collect(Collectors.toSet());
     }
 
+    public Map<Supplier, Integer> getSuppliersWithProductCount() {
+        return supplierDao.getAll().stream()
+                .sorted(Comparator.comparing(BaseModel::getName))
+                .collect(Collectors.toMap(Function.identity(), (supplier) ->(int) productDao.getAll().stream().filter(product -> product.hasSupplier(supplier)).count(), (o1, o2) -> o1, LinkedHashMap::new));
+    }
+
+    public Map<ProductCategory, Integer> getCategoriesWithProductCount() {
+        return productCategoryDao.getAll().stream()
+                .sorted(Comparator.comparing(BaseModel::getName))
+                .collect(Collectors.toMap(Function.identity(), (productCategory) -> productDao.getProductsByCategory(productCategory).size(), (o1, o2) -> o1, LinkedHashMap::new));
+    }
 }

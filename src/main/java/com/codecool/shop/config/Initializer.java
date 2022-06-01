@@ -522,7 +522,7 @@ public class Initializer implements ServletContextListener {
                     "8.99",
                     "USD",
                     teeTurtle,
-                    "Women's_Relaxed_Gaymer_T-Shirt .jpg",
+                    "Womens_Relaxed_Gaymer_T-Shirt .jpg",
                     "\n" +
                             "    100% Supersoft Ringspun Cotton\n" +
                             "    Made in the USA\n" +
@@ -695,10 +695,6 @@ public class Initializer implements ServletContextListener {
     }
 
     private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
-        for (ProductCategory productCategory : productCategories) {
-            productCategory.addSupplier(supplier);
-            supplier.addProductCategory(productCategory.getId());
-        }
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
     }
 }

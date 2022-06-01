@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Product extends BaseModel {
 
@@ -61,9 +62,12 @@ public class Product extends BaseModel {
         return List.copyOf(productCategories);
     }
 
+    public List<Integer> getProductCategoryIds() {
+        return productCategories.stream().map(ProductCategory::getId).collect(Collectors.toList());
+    }
+
     public void setProductCategories(ProductCategory productCategories) {
         if (this.productCategories == null) this.productCategories = new ArrayList<>();
-        productCategories.addProduct(this);
         this.productCategories.add(productCategories);
     }
 
@@ -73,7 +77,6 @@ public class Product extends BaseModel {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
-        this.supplier.addProduct(this);
     }
 
     public String getImageName() {
@@ -109,5 +112,8 @@ public class Product extends BaseModel {
     public boolean hasSupplier(List<Supplier> selectedSuppliers) {
         return selectedSuppliers.stream()
                 .anyMatch(supplier -> supplier.id == this.supplier.id);
+    }
+    public boolean hasSupplier(Supplier supplier) {
+        return this.supplier.getId() == supplier.getId();
     }
 }
