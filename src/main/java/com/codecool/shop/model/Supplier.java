@@ -6,6 +6,10 @@ public class Supplier extends BaseModel {
         super(name, description);
     }
 
+    public Supplier(String name, String description, int id) {
+        super(name, description, id);
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
