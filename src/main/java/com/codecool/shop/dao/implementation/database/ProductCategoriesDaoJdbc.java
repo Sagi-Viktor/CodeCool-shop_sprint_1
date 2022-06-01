@@ -6,6 +6,7 @@ import com.codecool.shop.model.ProductCategory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -43,7 +44,22 @@ public class ProductCategoriesDaoJdbc implements ProductCategoryDao {
 
     @Override
     public ProductCategory find(int id) {
-        return null;
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "SELECT * FROM categories WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            int categoryId = resultSet.getInt(1);
+            String name = resultSet.getString(2);
+            String department = resultSet.getString(3);
+            String description = resultSet.getString(3);
+            return new ProductCategory(name, department, description, categoryId);
+        } catch (SQLException msg) {
+            throw new RuntimeException("Error under get category from database. Searched Id: " + id, msg);
+        }
     }
 
     @Override
