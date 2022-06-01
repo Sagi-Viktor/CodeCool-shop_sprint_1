@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
+import com.codecool.shop.service.Services;
 import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,7 @@ public class EditCartAPI extends HttpServlet {
         int productId = cartItem.get("productId").getAsInt();
         int quantity = cartItem.get("quantity").getAsInt();
 
-        CartDao cart = CartDaoMem.getInstance();
-        cart.find(productId).ifPresent(item -> item.setQuantity(quantity));
+        Services.CartService().setProductQuantity(productId, quantity);
     }
 
 }

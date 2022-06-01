@@ -38,4 +38,8 @@ public class CartService {
     public UUID getId() {
         return cartDao.getId();
     }
+
+    public void setProductQuantity(int productId, int quantity) {
+        cartDao.find(productId).ifPresent(item -> item.setQuantity(quantity));
+    }
 }
