@@ -22,19 +22,20 @@ import java.sql.SQLException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private ProductDao productDataStore;
+    private ProductCategoryDao productCategoryDataStore;
+    private SupplierDao supplierDataStore;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        try {
-//            initDatabase();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
-        //setting up a new supplier
+        initMemory();
+    }
+
+    private void initMemory() {
+
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoMem.getInstance();
         Supplier hasbroGaming = addSupplier("Hasbro Gaming", "Board games");
         Supplier llc = addSupplier("LLC", "Exploding cittens distributor");
         Supplier phobolog = addSupplier("Phobolog", "Selling terraformer board games");
