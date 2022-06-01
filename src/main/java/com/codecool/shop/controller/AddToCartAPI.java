@@ -25,12 +25,5 @@ public class AddToCartAPI extends HttpServlet {
         int productId = requestObject.get("productId").getAsInt();
 
         Services.CartService().addToCart(productId);
-
-        CartDao cart = CartDaoMem.getInstance();
-        ProductDao productStore = ProductDaoMem.getInstance();
-        Product product = productStore.find(productId);
-
-        Optional<CartItem> cartItem = cart.find(productId);
-        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cart.add(new CartItem(product, 1)));
     }
 }
