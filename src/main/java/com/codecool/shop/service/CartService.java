@@ -18,11 +18,12 @@ public class CartService {
 
 
     public Cart getCart() {
-        return new Cart(cartDao.getAll(), getTotalPrice());
+        Set<CartItem> cartItems = cartDao.getAll();
+        return new Cart(cartItems, getTotalPrice(cartItems));
     }
 
-    public BigDecimal getTotalPrice() {
-        return cartDao.getAll().stream()
+    private BigDecimal getTotalPrice(Set<CartItem> cartItems) {
+        return cartItems.stream()
                 .map(CartItem::getPrice).reduce(new BigDecimal(0), BigDecimal::add);
     }
 
