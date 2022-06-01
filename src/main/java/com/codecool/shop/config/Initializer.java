@@ -14,11 +14,16 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 
 import org.postgresql.ds.PGSimpleDataSource;
+
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -28,7 +33,37 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        initMemory();
+        try (InputStream input = new FileInputStream("src/main/resources/connection.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            // get the properties value
+            String url = prop.getProperty("url");
+            String daoType = prop.getProperty("dao");
+            switch (daoType) {
+                case "memory": {
+                    initMemory();
+                    break;
+                }
+                case "jdbc": {
+                    String dbName = prop.getProperty("db.database");
+                    String dbUserName = prop.getProperty("db.user");
+                    String dbPassword = prop.getProperty("db.password");
+                    try {
+                        initDatabase(dbName, dbUserName, dbPassword);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                    break;
+                }
+                default:
+                {
+                    throw new IllegalArgumentException("Unknown property dao type, or dao type not defined: " + daoType);
+                }
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 
     private void initMemory() {
@@ -709,20 +744,19 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
     }
 
-    private void initDatabase() throws SQLException {
-        DataSource dataSource = connect();
+    private void initDatabase(String dbName, String dbUserName, String dbPassword) throws SQLException {
+        DataSource dataSource = connect(dbName, dbUserName, dbPassword);
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
         this.supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
-
     }
 
-    private DataSource connect() throws SQLException {
+    private DataSource connect(String dbName, String userName, String password) throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = System.getenv("DB_NAME");
-        String user = System.getenv("DB_USERNAME");
-        String password = System.getenv("DB_PASSWORD");
 
         dataSource.setDatabaseName(dbName);
-        dataSource.setUser(user);
+        dataSource.setUser(userName);
         dataSource.setPassword(password);
 
         System.out.println("Trying to connect");
