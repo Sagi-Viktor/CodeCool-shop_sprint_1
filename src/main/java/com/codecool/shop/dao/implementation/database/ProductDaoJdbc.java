@@ -6,6 +6,9 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -26,7 +29,21 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public void add(Product product) {
-
+        try (Connection connection = dataSource.getConnection()){
+            String sqlQuery = "INSERT INTO products(id, product_name, description, price, image_name, currency, supplier_id)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setString(4, product.getPrice());
+            preparedStatement.setString(5, product.getImageName());
+            preparedStatement.setString(6, String.valueOf(product.getDefaultCurrency()));
+            preparedStatement.setInt(7, product.getSupplier().getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException msg){
+            throw new RuntimeException("Error under add product to database: " + product, msg);
+        }
     }
 
     @Override
