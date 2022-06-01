@@ -28,12 +28,12 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        try {
-            initDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+//        try {
+//            initDatabase();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            System.exit(1);
+//        }
         //setting up a new supplier
         Supplier hasbroGaming = addSupplier("Hasbro Gaming", "Board games");
         Supplier llc = addSupplier("LLC", "Exploding cittens distributor");
