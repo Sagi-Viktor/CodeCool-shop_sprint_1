@@ -26,20 +26,18 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-//        try (Connection connection = dataSource.getConnection()) {
-//            String sqlQuery = "INSERT INTO suppliers(id, supplier_name, description, product_id, product_category_id) " +
-//                    "VALUES (?, ?, ?, ?, ?)";
-//            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-//            preparedStatement.setInt(1, supplier.getId());
-//            preparedStatement.setString(2, supplier.getName());
-//            preparedStatement.setString(3, supplier.getDescription());
-//            preparedStatement.setArray(4, (Array) supplier.getProductsIds());
-//            preparedStatement.setArray(5, (Array) supplier.getProductCategoryIds());
-//            preparedStatement.executeUpdate();
-//
-//        } catch (SQLException throwables) {
-//            throw new RuntimeException("Error under add supplier to database: " + supplier, throwables);
-//        }
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "INSERT INTO suppliers(id, supplier_name, description) " +
+                    "VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, supplier.getId());
+            preparedStatement.setString(2, supplier.getName());
+            preparedStatement.setString(3, supplier.getDescription());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under add supplier to database: " + supplier, throwables);
+        }
     }
 
     @Override
