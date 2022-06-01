@@ -46,4 +46,8 @@ public class CartService {
     public void removeAll() {
         cartDao.removeAll();
     }
+
+    public void remove(int productId) {
+        cartDao.find(productId).ifPresent(cartDao::remove);
+    }
 }
