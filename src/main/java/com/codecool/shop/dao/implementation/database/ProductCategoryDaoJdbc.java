@@ -111,6 +111,17 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public List<Integer> getAllId() {
-        return null;
+        try (Connection connection = dataSource.getConnection()){
+            String sqlQuery = "SELECT id FROM categories";
+            ResultSet resultSet = connection.createStatement().executeQuery(sqlQuery);
+            List<Integer> categoryIds = new ArrayList<>();
+
+            while (resultSet.next()){
+                categoryIds.add(resultSet.getInt(1));
+            }
+            return categoryIds;
+        } catch (SQLException msg) {
+            throw new RuntimeException("Error under get all category id from database ", msg);
+        }
     }
 }
