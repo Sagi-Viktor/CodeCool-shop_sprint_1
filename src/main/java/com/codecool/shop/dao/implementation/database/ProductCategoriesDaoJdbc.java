@@ -55,7 +55,7 @@ public class ProductCategoriesDaoJdbc implements ProductCategoryDao {
             int categoryId = resultSet.getInt(1);
             String name = resultSet.getString(2);
             String department = resultSet.getString(3);
-            String description = resultSet.getString(3);
+            String description = resultSet.getString(4);
             return new ProductCategory(name, department, description, categoryId);
         } catch (SQLException msg) {
             throw new RuntimeException("Error under get category from database. Searched Id: " + id, msg);
