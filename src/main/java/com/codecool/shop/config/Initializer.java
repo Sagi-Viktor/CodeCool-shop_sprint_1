@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 
+import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.Services;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -66,6 +68,7 @@ public class Initializer implements ServletContextListener {
         } catch (IOException io) {
             io.printStackTrace();
         }
+        Services.initProductService(new ProductService(productDataStore, productCategoryDataStore, supplierDataStore));
     }
 
     private void initMemory() {
