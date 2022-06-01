@@ -23,15 +23,12 @@ public class PaymentSummary extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        Set<CartItem> cartItems = cartDataStore.getAll();
-        BigDecimal totalPrice = Services.CartService().getTotalPrice();
-        Cart cart = new Cart(cartItems, totalPrice);
+        Cart cart = Services.CartService().getCart();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
         context.setVariable("cartItems", cart.getCartItems());
         context.setVariable("totalPrice", cart.getTotalPrice());
-        cartDataStore.removeAll();
+        Services.CartService().removeAll();
         engine.process("payment-summary.html", context, response.getWriter());
     }
 }

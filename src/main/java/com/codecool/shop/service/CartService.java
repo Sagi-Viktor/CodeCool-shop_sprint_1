@@ -42,4 +42,8 @@ public class CartService {
     public void setProductQuantity(int productId, int quantity) {
         cartDao.find(productId).ifPresent(item -> item.setQuantity(quantity));
     }
+
+    public void removeAll() {
+        cartDao.removeAll();
+    }
 }
