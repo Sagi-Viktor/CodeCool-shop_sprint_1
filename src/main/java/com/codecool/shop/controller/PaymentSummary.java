@@ -6,6 +6,7 @@ import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.Services;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -25,7 +26,7 @@ public class PaymentSummary extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CartDao cartDataStore = CartDaoMem.getInstance();
         Set<CartItem> cartItems = cartDataStore.getAll();
-        BigDecimal totalPrice = CartService.getTotalPrice();
+        BigDecimal totalPrice = Services.getCartService().getTotalPrice();
         Cart cart = new Cart(cartItems, totalPrice);
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());

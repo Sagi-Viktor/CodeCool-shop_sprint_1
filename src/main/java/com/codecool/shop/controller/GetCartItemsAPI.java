@@ -5,6 +5,7 @@ import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.Services;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -21,9 +22,10 @@ public class GetCartItemsAPI  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         CartDao cartDataStore = CartDaoMem.getInstance();
         Set<CartItem> cartItems = cartDataStore.getAll();
-        BigDecimal totalPrice = CartService.getTotalPrice();
+        BigDecimal totalPrice = Services.getCartService().getTotalPrice();
         Cart cart = new Cart(cartItems, totalPrice);
 
         var cartItemsJson = new Gson().toJson(cart);
