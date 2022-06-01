@@ -27,6 +27,10 @@ public class ProductService {
         return productCategoryDao.find(categoryId);
     }
 
+    public Product getProduct(int id) {
+        return productDao.find(id);
+    }
+
     public List<ProductCategory> getProductCategories() {
         return productCategoryDao.getAll();
     }

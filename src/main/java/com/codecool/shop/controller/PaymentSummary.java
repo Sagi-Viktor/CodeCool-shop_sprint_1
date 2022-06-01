@@ -5,7 +5,6 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
-import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.Services;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
