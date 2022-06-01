@@ -5,6 +5,8 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.dao.implementation.memory.OrderDaoJson;
 import com.codecool.shop.model.OrderModel;
+import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.Services;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -30,7 +32,7 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        CartDao cartDaoMem = CartDaoMem.getInstance();
+        CartService cartService = Services.CartService();
         OrderDaoJson orderDaoJson = new OrderDaoJson();
 
         String firstName = req.getParameter("first-name");
@@ -43,7 +45,7 @@ public class CheckoutController extends HttpServlet {
         String houseNumber = req.getParameter("house-number");
         String paymentType = req.getParameter("payment");
 
-        OrderModel orderModel = new OrderModel(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartDaoMem.getId().toString());
+        OrderModel orderModel = new OrderModel(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartService.getId().toString());
 
         if (Optional.ofNullable(req.getParameter("same-address")).isEmpty()) {
             String billingCountry = req.getParameter("billing-country");
@@ -55,7 +57,7 @@ public class CheckoutController extends HttpServlet {
             orderModel.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
 
-        orderDaoJson.add(orderModel, cartDaoMem.getId());
+        orderDaoJson.add(orderModel, cartService.getId());
         switch (paymentType) {
             case "paypal":
                 resp.sendRedirect("checkout/payment/paypal");

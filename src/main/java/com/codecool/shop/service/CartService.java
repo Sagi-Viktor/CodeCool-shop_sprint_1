@@ -7,6 +7,7 @@ import com.codecool.shop.model.CartItem;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public class CartService {
     private final CartDao cartDao;
@@ -32,5 +33,9 @@ public class CartService {
 
     public Set<CartItem> getAllCartItems() {
         return cartDao.getAll();
+    }
+
+    public UUID getId() {
+        return cartDao.getId();
     }
 }
