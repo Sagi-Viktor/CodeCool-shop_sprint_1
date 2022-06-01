@@ -1,19 +1,14 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-
-import static com.codecool.shop.controller.JsonUtil.getRequestJsonObject;
 
 @WebServlet(urlPatterns = {"/api/remove-from-cart"})
 public class RemoveFromCartAPI extends HttpServlet {
