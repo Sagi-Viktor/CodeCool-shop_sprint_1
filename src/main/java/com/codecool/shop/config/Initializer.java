@@ -50,6 +50,7 @@ public class Initializer implements ServletContextListener {
                     String dbUserName = prop.getProperty("db.user");
                     String dbPassword = prop.getProperty("db.password");
                     try {
+//                        setupDataBase(dbName, dbUserName, dbPassword);
                         initDatabase(dbName, dbUserName, dbPassword);
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -743,6 +744,23 @@ public class Initializer implements ServletContextListener {
 
     private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
+    }
+
+    private void setupDataBase(String dbName, String dbUserName, String dbPassword) throws SQLException {
+        initMemory();
+        DataSource dataSource = connect(dbName, dbUserName, dbPassword);
+        setupSuppliersIntoDataBase(dataSource);
+        setupProductCategoriesIntoDataBase(dataSource);
+    }
+
+    private void setupSuppliersIntoDataBase(DataSource dataSource) {
+        SupplierDao supplierDaoJdbc = SupplierDaoJdbc.getInstance(dataSource);
+        supplierDataStore.getAll().forEach(supplierDaoJdbc::add);
+    }
+
+    private void setupProductCategoriesIntoDataBase(DataSource dataSource) {
+        ProductCategoryDao productCategoryDaoJdbc = ProductCategoryDaoJdbc.getInstance(dataSource);
+        productCategoryDataStore.getAll().forEach(productCategoryDaoJdbc::add);
     }
 
     private void initDatabase(String dbName, String dbUserName, String dbPassword) throws SQLException {
