@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoriesDaoJdbc implements ProductCategoryDao {
@@ -89,7 +90,23 @@ public class ProductCategoriesDaoJdbc implements ProductCategoryDao {
 
     @Override
     public List<ProductCategory> getAll() {
-        return null;
+        try (Connection connection = dataSource.getConnection()){
+            String sqlQuery = "SELECT * FROM categories";
+            ResultSet resultSet = connection.createStatement().executeQuery(sqlQuery);
+            List<ProductCategory> productCategories = new ArrayList<>();
+
+            while (resultSet.next()){
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String department = resultSet.getString(3);
+                String description = resultSet.getString(4);
+
+                productCategories.add(new ProductCategory(name, department, description, id));
+            }
+            return productCategories;
+        } catch (SQLException msg) {
+            throw new RuntimeException("Error under get all category from database ", msg);
+        }
     }
 
     @Override
