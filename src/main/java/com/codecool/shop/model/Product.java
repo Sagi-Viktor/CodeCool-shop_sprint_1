@@ -68,7 +68,6 @@ public class Product extends BaseModel {
 
     public void setProductCategories(ProductCategory productCategories) {
         if (this.productCategories == null) this.productCategories = new ArrayList<>();
-        productCategories.addProduct(this);
         this.productCategories.add(productCategories);
     }
 

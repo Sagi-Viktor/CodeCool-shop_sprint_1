@@ -52,11 +52,6 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     }
 
     @Override
-    public List<ProductCategory> getBySupplierId(int supplierId) {
-        return data.stream().filter(productCategory -> productCategory.hasSupplier(supplierId)).collect(Collectors.toList());
-    }
-
-    @Override
     public List<Integer> getAllId() {
         return data.stream()
                 .map(ProductCategory::getId)

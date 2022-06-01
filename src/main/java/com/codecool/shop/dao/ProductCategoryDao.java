@@ -14,7 +14,5 @@ public interface ProductCategoryDao {
 
     List<ProductCategory> getAll();
 
-    List<ProductCategory> getBySupplierId(int supplierId);
-
     List<Integer> getAllId();
 }

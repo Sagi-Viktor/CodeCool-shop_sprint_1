@@ -695,9 +695,6 @@ public class Initializer implements ServletContextListener {
     }
 
     private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
-        for (ProductCategory productCategory : productCategories) {
-            productCategory.addSupplier(supplier);
-        }
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
     }
 }

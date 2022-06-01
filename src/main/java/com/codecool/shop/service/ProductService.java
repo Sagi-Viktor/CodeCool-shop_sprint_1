@@ -3,11 +3,13 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.BaseModel;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -35,7 +37,7 @@ public class ProductService {
 
     public int countAvailableProducts(int categoryId, List<Supplier> selectedSuppliers) {
         if (selectedSuppliers.isEmpty()) {
-            return productCategoryDao.find(categoryId).getNumberOfProducts();
+            return productDao.getProductsByCategory(productCategoryDao.find(categoryId)).size();
         }
         int numberOfProducts = 0;
         for (Supplier supplier : selectedSuppliers) {
@@ -45,10 +47,6 @@ public class ProductService {
                     .count();
         }
         return numberOfProducts;
-    }
-
-    public List<ProductCategory> getProductCategoryBySupplier(int supplierId) {
-        return productCategoryDao.getBySupplierId(supplierId);
     }
 
     public List<Product> getProductsForCategory(int categoryId) {
@@ -121,10 +119,14 @@ public class ProductService {
     }
 
     public Map<Supplier, Integer> getSuppliersWithProductCount() {
-        Map<Supplier, Integer> suppliersWithProductCount = new HashMap<>();
-        for (Supplier supplier : supplierDao.getAll()) {
-            suppliersWithProductCount.put(supplier, (int) productDao.getAll().stream().filter(product -> product.hasSupplier(supplier)).count());
-        }
-        return suppliersWithProductCount;
+        return supplierDao.getAll().stream()
+                .sorted(Comparator.comparing(BaseModel::getName))
+                .collect(Collectors.toMap(Function.identity(), (supplier) ->(int) productDao.getAll().stream().filter(product -> product.hasSupplier(supplier)).count(), (o1, o2) -> o1, LinkedHashMap::new));
+    }
+
+    public Map<ProductCategory, Integer> getCategoriesWithProductCount() {
+        return productCategoryDao.getAll().stream()
+                .sorted(Comparator.comparing(BaseModel::getName))
+                .collect(Collectors.toMap(Function.identity(), (productCategory) -> productDao.getProductsByCategory(productCategory).size(), (o1, o2) -> o1, LinkedHashMap::new));
     }
 }

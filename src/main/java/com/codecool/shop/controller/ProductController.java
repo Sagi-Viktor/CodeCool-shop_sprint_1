@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -32,9 +33,8 @@ public class ProductController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        Map<Supplier, Integer> s = productService.getSuppliersWithProductCount();
         context.setVariable("suppliers", productService.getSuppliersWithProductCount());
-        context.setVariable("categories", productService.getProductCategories());
+        context.setVariable("categories", productService.getCategoriesWithProductCount());
         context.setVariable("products", productService.getAllProducts());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();

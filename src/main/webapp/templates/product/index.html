@@ -59,12 +59,12 @@
         <div id="categories">
             <label for="category-list">Categories</label>
             <ul id="category-list">
-                <li th:each="cat: ${categories}">
+                <li th:each="categoryMap: ${categories}">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="category-filter" th:value="${cat.id}">
+                        <input type="checkbox" name="category-filter" th:value="${categoryMap.key.id}">
                         <span>
-                            <a th:text="${cat.name}"></a>
-                            <em th:text="${cat.numberOfProducts}"></em>
+                            <a th:text="${categoryMap.key.name}"></a>
+                            <em th:text="${categoryMap.value}"></em>
 <!--                            <em class="actual-product-number">0</em>-->
                         </span>
                     </label>
