@@ -5,12 +5,12 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 public class CartService {
     private final CartDao cartDao;
+    private Cart cart = null;
 
     public CartService(CartDao cartDao) {
         this.cartDao = cartDao;
@@ -18,8 +18,7 @@ public class CartService {
 
 
     public Cart getCart() {
-        Set<CartItem> cartItems = cartDao.getAll();
-        return new Cart(cartItems, getTotalPrice(cartItems));
+        return cart;
     }
 
     private BigDecimal getTotalPrice(Set<CartItem> cartItems) {
@@ -28,8 +27,8 @@ public class CartService {
     }
 
     public void addToCart(int productId) {
-        Optional<CartItem> cartItem = cartDao.find(productId);
-        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cartDao.add(new CartItem(Services.ProductService().getProduct(productId), 1)));
+        if (cart == null) cart = new Cart();
+        cart.add(productId);
     }
 
     public Set<CartItem> getAllCartItems() {
