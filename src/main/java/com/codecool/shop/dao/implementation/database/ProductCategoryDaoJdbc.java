@@ -11,18 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategoriesDaoJdbc implements ProductCategoryDao {
+public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private final DataSource dataSource;
-    private static ProductCategoriesDaoJdbc instance = null;
+    private static ProductCategoryDaoJdbc instance = null;
 
 
-    public ProductCategoriesDaoJdbc(DataSource dataSource) {
+    public ProductCategoryDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public static ProductCategoriesDaoJdbc getInstance(DataSource dataSource){
+    public static ProductCategoryDaoJdbc getInstance(DataSource dataSource){
         if (instance == null){
-            instance = new ProductCategoriesDaoJdbc(dataSource);
+            instance = new ProductCategoryDaoJdbc(dataSource);
         }
         return instance;
     }

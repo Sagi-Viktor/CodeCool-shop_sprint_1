@@ -3,7 +3,7 @@ package com.codecool.shop.config;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.database.ProductCategoriesDaoJdbc;
+import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
 import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
@@ -748,7 +748,7 @@ public class Initializer implements ServletContextListener {
     private void initDatabase(String dbName, String dbUserName, String dbPassword) throws SQLException {
         DataSource dataSource = connect(dbName, dbUserName, dbPassword);
         productDataStore = ProductDaoMem.getInstance();
-        productCategoryDataStore = ProductCategoriesDaoJdbc.getInstance(dataSource);
+        productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(dataSource);
         supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
         this.supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
     }
