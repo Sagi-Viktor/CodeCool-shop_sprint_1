@@ -16,11 +16,11 @@ public class Services {
         }
     }
 
-    public static ProductService getProductService() {
+    public static ProductService ProductService() {
         return productService;
     }
 
-    public static CartService getCartService() {
+    public static CartService CartService() {
         return cartService;
     }
 }

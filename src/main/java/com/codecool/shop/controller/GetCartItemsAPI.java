@@ -17,7 +17,7 @@ public class GetCartItemsAPI  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Cart cart = Services.getCartService().getCart();
+        Cart cart = Services.CartService().getCart();
 
         var cartItemsJson = new Gson().toJson(cart);
         resp.getWriter().println(cartItemsJson);

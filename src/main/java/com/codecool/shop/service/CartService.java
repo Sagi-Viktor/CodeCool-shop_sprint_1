@@ -27,7 +27,7 @@ public class CartService {
 
     public void addToCart(int productId) {
         Optional<CartItem> cartItem = cartDao.find(productId);
-        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cartDao.add(new CartItem(Services.getProductService().getProduct(productId), 1)));
+        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cartDao.add(new CartItem(Services.ProductService().getProduct(productId), 1)));
     }
 
     public Set<CartItem> getAllCartItems() {

@@ -24,7 +24,7 @@ public class AddToCartAPI extends HttpServlet {
         JsonObject requestObject = JsonUtil.getRequestJsonObject(req);
         int productId = requestObject.get("productId").getAsInt();
 
-        Services.getCartService().addToCart(productId);
+        Services.CartService().addToCart(productId);
 
         CartDao cart = CartDaoMem.getInstance();
         ProductDao productStore = ProductDaoMem.getInstance();

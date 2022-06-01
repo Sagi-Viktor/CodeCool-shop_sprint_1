@@ -25,7 +25,7 @@ public class PaymentSummary extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CartDao cartDataStore = CartDaoMem.getInstance();
         Set<CartItem> cartItems = cartDataStore.getAll();
-        BigDecimal totalPrice = Services.getCartService().getTotalPrice();
+        BigDecimal totalPrice = Services.CartService().getTotalPrice();
         Cart cart = new Cart(cartItems, totalPrice);
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
