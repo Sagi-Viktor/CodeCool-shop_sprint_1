@@ -3,10 +3,8 @@ package com.codecool.shop.model;
 import com.codecool.shop.service.Services;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cart {
 
@@ -24,6 +22,10 @@ public class Cart {
 
     public Set<CartItem> getCartItems() {
         return Set.copyOf(cartItems);
+    }
+
+    public Map<Integer, Integer> getCartItemIdsWithQuantity() {
+        return cartItems.stream().collect(Collectors.toMap(CartItem::getProductId, CartItem::getQuantity, (o1, o2) -> o1, LinkedHashMap::new));
     }
 
     public void add(CartItem cartItem) {
