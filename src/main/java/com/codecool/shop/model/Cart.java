@@ -64,4 +64,8 @@ public class Cart {
     public void remove(int productId) {
         cartItems.remove(getCartItem(productId).orElse(null));
     }
+
+    public Currency getCurrency() {
+        return cartItems.iterator().next().getCurrency();
+    }
 }
