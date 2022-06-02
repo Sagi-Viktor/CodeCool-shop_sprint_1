@@ -14,6 +14,14 @@ public class OrderDaoJson implements OrderDao {
 
     private String filePathBeginning = "src/main/resources/order-";
     private String extension = ".json";
+    private static OrderDaoJson instance;
+
+    public static OrderDao getInstance() {
+        if (instance == null) {
+            instance = new OrderDaoJson();
+        }
+        return instance;
+    }
 
     @Override
     public void add(OrderModel orderModel, UUID uuid) {
