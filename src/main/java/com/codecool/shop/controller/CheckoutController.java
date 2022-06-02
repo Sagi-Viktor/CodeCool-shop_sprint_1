@@ -1,9 +1,9 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.memory.OrderDaoJson;
 import com.codecool.shop.model.OrderModel;
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.Services;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -31,7 +31,7 @@ public class CheckoutController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         CartService cartService = Services.CartService();
-        OrderDaoJson orderDaoJson = new OrderDaoJson();
+        OrderService orderService = Services.OrderService();
 
         String firstName = req.getParameter("first-name");
         String lastName = req.getParameter("last-name");
@@ -54,8 +54,7 @@ public class CheckoutController extends HttpServlet {
 
             orderModel.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
-
-        orderDaoJson.add(orderModel, cartService.getId());
+        orderService.add(orderModel, cartService.getId());
         switch (paymentType) {
             case "paypal":
                 resp.sendRedirect("checkout/payment/paypal");
