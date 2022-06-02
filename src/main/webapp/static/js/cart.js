@@ -15,8 +15,17 @@ async function refreshCartItems() {
     addCartEventListeners();
 }
 
+function getTotalPrice(cartItems) {
+    let totalPrice = 0;
+    for (let cartItem of cartItems) {
+        totalPrice += +cartItem["product"]["defaultPrice"] * cartItem["quantity"];
+    }
+    return totalPrice.toFixed(2);
+}
+
 function createCartTable(cart) {
     const cartItems = cart["cartItems"];
+    const totalPrice = getTotalPrice(cartItems);
     if (!cartItems.length) return 'No items in cart';
     const currency = cartItems[0]["product"]["defaultCurrency"];
     let tableBody = createCartTableBody(cartItems);
@@ -35,7 +44,7 @@ function createCartTable(cart) {
             ${tableBody}
         </tbody>
     </table>
-    <p id="total-price">Total price: ${cart["totalPrice"]} ${currency}</p>
+    <p id="total-price">Total price: ${totalPrice} ${currency}</p>
     `;
 }
 
@@ -52,7 +61,7 @@ function createCartTableBody(cartItems) {
                 </td>
                 <td><p>${product["defaultPrice"]} ${product["defaultCurrency"]}</p></td>
                 <td>${createQuantitySelect(product["id"], cartItem["quantity"])}</td>
-                <td>${product["defaultPrice"] * cartItem["quantity"]} ${product["defaultCurrency"]}</td>
+                <td>${(product["defaultPrice"] * cartItem["quantity"]).toFixed(2)} ${product["defaultCurrency"]}</td>
             </tr>
         `;
     }
