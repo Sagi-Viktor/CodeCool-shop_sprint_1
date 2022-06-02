@@ -1,24 +1,54 @@
 package com.codecool.shop.model;
 
-public class Order {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String country;
-    private String state;
-    private String zipCode;
-    private String street;
-    private String houseNumber;
-    private String paymentType;
-    private String billingCountry;
-    private String billingState;
-    private String billingZipCode;
-    private String billingStreet;
-    private String billingHouseNumber;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Map;
 
-    public Order(String firstName, String lastName, String email, String country, String state,
-                 String zipCode, String street, String houseNumber, String paymentType, String id) {
+public class Order {
+    private final String
+            id,
+            firstName,
+            lastName,
+            email,
+            country,
+            state,
+            zipCode,
+            street,
+            houseNumber,
+            paymentType;
+    private String
+            billingCountry,
+            billingState,
+            billingZipCode,
+            billingStreet,
+            billingHouseNumber;
+    private final Map<Integer, Integer> cartItemIdsWithQuantity;
+    private final BigDecimal totalPrice;
+    private final Date date;
+    private OrderStatusTypes orderStatus;
+
+    public enum OrderStatusTypes {
+        CHECKED,
+        PAID,
+        CONFIRMED,
+        SHIPPED;
+    }
+
+
+    public Order
+            (
+                    String firstName,
+                    String lastName,
+                    String email,
+                    String country,
+                    String state,
+                    String zipCode,
+                    String street,
+                    String houseNumber,
+                    String paymentType,
+                    Cart cart,
+                    OrderStatusTypes orderStatus
+            ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -33,7 +63,11 @@ public class Order {
         billingZipCode = zipCode;
         billingStreet = street;
         billingHouseNumber = houseNumber;
-        this.id = id;
+        this.id = cart.getId().toString();
+        this.cartItemIdsWithQuantity = cart.getCartItemIdsWithQuantity();
+        this.totalPrice = cart.getTotalPrice();
+        date = new Date();
+        this.orderStatus = orderStatus;
     }
 
     public void addBillingAddress(String billingCountry, String billingState, String billingZipCode, String billingStreet, String billingHouseNumber) {

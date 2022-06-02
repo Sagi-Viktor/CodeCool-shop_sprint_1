@@ -43,7 +43,20 @@ public class CheckoutController extends HttpServlet {
         String houseNumber = req.getParameter("house-number");
         String paymentType = req.getParameter("payment");
 
-        Order order = new Order(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartService.getId().toString());
+        Order order = new Order
+                (
+                        firstName,
+                        lastName,
+                        email,
+                        country,
+                        state,
+                        zipCode,
+                        street,
+                        houseNumber,
+                        paymentType,
+                        cartService.getCart(),
+                        Order.OrderStatusTypes.CHECKED
+                );
 
         if (Optional.ofNullable(req.getParameter("same-address")).isEmpty()) {
             String billingCountry = req.getParameter("billing-country");
