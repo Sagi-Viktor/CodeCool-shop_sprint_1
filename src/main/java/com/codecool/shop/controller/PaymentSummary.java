@@ -2,10 +2,11 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementation.memory.CartDaoMem;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.Services;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,15 +24,12 @@ public class PaymentSummary extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        Set<CartItem> cartItems = cartDataStore.getAll();
-        BigDecimal totalPrice = CartService.getTotalPrice();
-        Cart cart = new Cart(cartItems, totalPrice);
+        CartService cartService = Services.CartService();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        context.setVariable("cartItems", cart.getCartItems());
-        context.setVariable("totalPrice", cart.getTotalPrice());
-        cartDataStore.removeAll();
+        context.setVariable("cartItems", cartService.getAllCartItems());
+        context.setVariable("totalPrice", cartService.getTotalPrice());
+        Services.CartService().removeAll();
         engine.process("payment-summary.html", context, response.getWriter());
     }
 }

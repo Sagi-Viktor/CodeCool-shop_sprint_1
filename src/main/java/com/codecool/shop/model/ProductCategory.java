@@ -8,6 +8,11 @@ public class ProductCategory extends BaseModel {
         this.department = department;
     }
 
+    public ProductCategory(String name, String department, String description, int id) {
+        super(name, description, id);
+        this.department = department;
+    }
+
     public String getDepartment() {
         return department;
     }

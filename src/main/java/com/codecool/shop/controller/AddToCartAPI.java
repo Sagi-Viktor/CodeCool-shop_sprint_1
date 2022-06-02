@@ -2,11 +2,11 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.memory.CartDaoMem;
+import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
 import com.codecool.shop.model.CartItem;
 import com.codecool.shop.model.Product;
-import com.google.gson.JsonElement;
+import com.codecool.shop.service.Services;
 import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
@@ -24,11 +24,6 @@ public class AddToCartAPI extends HttpServlet {
         JsonObject requestObject = JsonUtil.getRequestJsonObject(req);
         int productId = requestObject.get("productId").getAsInt();
 
-        CartDao cart = CartDaoMem.getInstance();
-        ProductDao productStore = ProductDaoMem.getInstance();
-        Product product = productStore.find(productId);
-
-        Optional<CartItem> cartItem = cart.find(productId);
-        cartItem.ifPresentOrElse(CartItem::increaseQuantity, () -> cart.add(new CartItem(product, 1)));
+        Services.CartService().addToCart(productId);
     }
 }

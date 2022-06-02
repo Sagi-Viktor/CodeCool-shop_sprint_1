@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.memory;
 
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.OrderModel;
@@ -7,10 +7,6 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 

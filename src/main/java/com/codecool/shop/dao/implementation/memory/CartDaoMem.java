@@ -1,10 +1,10 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.memory;
 
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.CartItem;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CartDaoMem implements CartDao {
 
@@ -26,6 +26,12 @@ public class CartDaoMem implements CartDao {
     @Override
     public void add(CartItem cartItem) {
         data.add(cartItem);
+    }
+
+    @Override
+    public void add(Cart cart) {
+        data.addAll(cart.getCartItems());
+        id = cart.getId();
     }
 
     @Override
@@ -51,5 +57,10 @@ public class CartDaoMem implements CartDao {
     @Override
     public UUID getId() {
         return id;
+    }
+
+    @Override
+    public Cart get() {
+        return new Cart(data, id);
     }
 }

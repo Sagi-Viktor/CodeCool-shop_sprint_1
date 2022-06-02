@@ -14,8 +14,12 @@ public class BaseModel {
     }
 
     public BaseModel(String name, String description) {
-        this.name = name;
+        this(name);
         this.description = description;
+    }
+    public BaseModel(String name, String description, int id) {
+        this(name, description);
+        this.id = id;
     }
 
 

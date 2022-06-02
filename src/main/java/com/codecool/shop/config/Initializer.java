@@ -1,11 +1,16 @@
 package com.codecool.shop.config;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
+import com.codecool.shop.dao.implementation.memory.CartDaoMem;
+import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
+import com.codecool.shop.dao.implementation.memory.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -13,18 +18,70 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+
+import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.Services;
+import org.postgresql.ds.PGSimpleDataSource;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private ProductDao productDataStore;
+    private ProductCategoryDao productCategoryDataStore;
+    private SupplierDao supplierDataStore;
+    private CartDao cartDao;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        try (InputStream input = new FileInputStream("src/main/resources/connection.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            // get the properties value
+            String url = prop.getProperty("url");
+            String daoType = prop.getProperty("dao");
+            switch (daoType) {
+                case "memory": {
+                    initMemory();
+                    break;
+                }
+                case "jdbc": {
+                    String dbName = prop.getProperty("db.database");
+                    String dbUserName = prop.getProperty("db.user");
+                    String dbPassword = prop.getProperty("db.password");
+                    try {
+//                        setupDataBase(dbName, dbUserName, dbPassword);
+                        initDatabase(dbName, dbUserName, dbPassword);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("Unknown property dao type, or dao type not defined: " + daoType);
+                }
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        Services.initProductService(new ProductService(productDataStore, productCategoryDataStore, supplierDataStore));
+        Services.initCartService(new CartService(cartDao));
+    }
 
-        //setting up a new supplier
+    private void initMemory() {
+
+        productDataStore = ProductDaoMem.getInstance();
+        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        supplierDataStore = SupplierDaoMem.getInstance();
+        cartDao = CartDaoMem.getInstance();
         Supplier hasbroGaming = addSupplier("Hasbro Gaming", "Board games");
         Supplier llc = addSupplier("LLC", "Exploding cittens distributor");
         Supplier phobolog = addSupplier("Phobolog", "Selling terraformer board games");
@@ -696,5 +753,51 @@ public class Initializer implements ServletContextListener {
 
     private void addProduct(String name, String price, String currency, Supplier supplier, String imageName, String description, ProductCategory... productCategories) {
         productDataStore.add(new Product(name, new BigDecimal(price), currency, description, supplier, imageName, productCategories));
+    }
+
+    private void setupDataBase(String dbName, String dbUserName, String dbPassword) throws SQLException {
+        initMemory();
+        DataSource dataSource = connect(dbName, dbUserName, dbPassword);
+        setupSuppliersIntoDataBase(dataSource);
+        setupProductCategoriesIntoDataBase(dataSource);
+        setupProductsIntoDataBase(dataSource);
+    }
+
+    private void setupSuppliersIntoDataBase(DataSource dataSource) {
+        SupplierDao supplierDaoJdbc = SupplierDaoJdbc.getInstance(dataSource);
+        supplierDataStore.getAll().forEach(supplierDaoJdbc::add);
+    }
+
+    private void setupProductCategoriesIntoDataBase(DataSource dataSource) {
+        ProductCategoryDao productCategoryDaoJdbc = ProductCategoryDaoJdbc.getInstance(dataSource);
+        productCategoryDataStore.getAll().forEach(productCategoryDaoJdbc::add);
+    }
+
+    private void setupProductsIntoDataBase(DataSource dataSource) {
+        ProductDao productDaoJdbc = ProductDaoJdbc.getInstance(dataSource);
+        productDataStore.getAll().forEach(productDaoJdbc::add);
+    }
+
+    private void initDatabase(String dbName, String dbUserName, String dbPassword) throws SQLException {
+        DataSource dataSource = connect(dbName, dbUserName, dbPassword);
+        productDataStore = ProductDaoJdbc.getInstance(dataSource);
+        productCategoryDataStore = ProductCategoryDaoJdbc.getInstance(dataSource);
+        supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
+        //TODO setup CartDaoJdbc
+        cartDao = CartDaoMem.getInstance();
+    }
+
+    private DataSource connect(String dbName, String userName, String password) throws SQLException {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+
+        dataSource.setDatabaseName(dbName);
+        dataSource.setUser(userName);
+        dataSource.setPassword(password);
+
+        System.out.println("Trying to connect");
+        dataSource.getConnection().close();
+        System.out.println("Connection ok.");
+
+        return dataSource;
     }
 }
