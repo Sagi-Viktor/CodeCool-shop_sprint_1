@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 public class CartItem {
 
@@ -41,5 +42,9 @@ public class CartItem {
 
     public int getProductId() {
         return this.product.getId();
+    }
+
+    public Currency getCurrency() {
+        return product.getDefaultCurrency();
     }
 }

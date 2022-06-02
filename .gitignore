@@ -1,6 +1,7 @@
 *.class
 
 src/main/resources/*.properties
+src/main/resources/*.json
 # OS-X
 **/.DS_Store
 

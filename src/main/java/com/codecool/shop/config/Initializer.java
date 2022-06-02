@@ -1,16 +1,11 @@
 package com.codecool.shop.config;
 
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.database.OrderDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.database.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.database.SupplierDaoJdbc;
-import com.codecool.shop.dao.implementation.memory.CartDaoMem;
-import com.codecool.shop.dao.implementation.memory.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.memory.ProductDaoMem;
-import com.codecool.shop.dao.implementation.memory.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.memory.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -24,6 +19,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 
 import com.codecool.shop.service.CartService;
+import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.service.Services;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -38,6 +34,7 @@ public class Initializer implements ServletContextListener {
     private ProductCategoryDao productCategoryDataStore;
     private SupplierDao supplierDataStore;
     private CartDao cartDao;
+    private OrderDao orderDao;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -74,6 +71,7 @@ public class Initializer implements ServletContextListener {
         }
         Services.initProductService(new ProductService(productDataStore, productCategoryDataStore, supplierDataStore));
         Services.initCartService(new CartService(cartDao));
+        Services.initOrderService(new OrderService(orderDao));
     }
 
     private void initMemory() {
@@ -82,6 +80,7 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         supplierDataStore = SupplierDaoMem.getInstance();
         cartDao = CartDaoMem.getInstance();
+        orderDao = OrderDaoJson.getInstance();
         Supplier hasbroGaming = addSupplier("Hasbro Gaming", "Board games");
         Supplier llc = addSupplier("LLC", "Exploding cittens distributor");
         Supplier phobolog = addSupplier("Phobolog", "Selling terraformer board games");
@@ -785,6 +784,7 @@ public class Initializer implements ServletContextListener {
         supplierDataStore = SupplierDaoJdbc.getInstance(dataSource);
         //TODO setup CartDaoJdbc
         cartDao = CartDaoMem.getInstance();
+        orderDao = OrderDaoJdbc.getInstance(dataSource);
     }
 
     private DataSource connect(String dbName, String userName, String password) throws SQLException {
