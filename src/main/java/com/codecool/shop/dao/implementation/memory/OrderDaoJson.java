@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 public class OrderDaoJson implements OrderDao {
 
@@ -24,9 +23,9 @@ public class OrderDaoJson implements OrderDao {
     }
 
     @Override
-    public void add(Order order, UUID uuid) {
+    public void add(Order order) {
         Gson gson = new Gson();
-        String fileName = filePathBeginning + uuid + extension;
+        String fileName = filePathBeginning + order.getId() + extension;
         try {
             File file = new File(fileName);
             file.createNewFile();

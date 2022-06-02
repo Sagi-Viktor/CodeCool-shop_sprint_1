@@ -67,7 +67,7 @@ public class CheckoutController extends HttpServlet {
 
             order.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
-        orderService.add(order, cartService.getId());
+        orderService.add(order);
         switch (paymentType) {
             case "paypal":
                 resp.sendRedirect("checkout/payment/paypal");

@@ -4,6 +4,9 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.Order;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +26,14 @@ public class OrderDaoJdbc implements OrderDao {
     }
 
     @Override
-    public void add(Order order, UUID uuid) {
+    public void add(Order order) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sqlQuery = "";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error under adding order to database: " + order, throwables);
+        }
 
     }
 
