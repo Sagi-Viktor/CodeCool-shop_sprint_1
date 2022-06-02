@@ -1,7 +1,7 @@
 package com.codecool.shop.service;
 
 import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.model.OrderModel;
+import com.codecool.shop.model.Order;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public void add(OrderModel orderModel, UUID id) {
-        orderDao.add(orderModel, id);
+    public void add(Order order, UUID id) {
+        orderDao.add(order, id);
     }
 }

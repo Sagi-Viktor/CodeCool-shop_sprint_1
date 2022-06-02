@@ -1,7 +1,7 @@
 package com.codecool.shop.dao.implementation.database;
 
 import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.model.OrderModel;
+import com.codecool.shop.model.Order;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -23,22 +23,22 @@ public class OrderDaoJdbc implements OrderDao {
     }
 
     @Override
-    public void add(OrderModel orderModel, UUID uuid) {
+    public void add(Order order, UUID uuid) {
 
     }
 
     @Override
-    public void update(OrderModel orderModel) {
+    public void update(Order order) {
 
     }
 
     @Override
-    public OrderModel get(String id) {
+    public Order get(String id) {
         return null;
     }
 
     @Override
-    public List<OrderModel> getAll() {
+    public List<Order> getAll() {
         return null;
     }
 }

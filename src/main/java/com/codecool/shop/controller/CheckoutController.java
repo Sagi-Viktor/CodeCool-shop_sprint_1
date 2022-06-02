@@ -1,7 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.model.OrderModel;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.service.CartService;
 import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.Services;
@@ -43,7 +43,7 @@ public class CheckoutController extends HttpServlet {
         String houseNumber = req.getParameter("house-number");
         String paymentType = req.getParameter("payment");
 
-        OrderModel orderModel = new OrderModel(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartService.getId().toString());
+        Order order = new Order(firstName, lastName, email, country, state, zipCode, street, houseNumber, paymentType, cartService.getId().toString());
 
         if (Optional.ofNullable(req.getParameter("same-address")).isEmpty()) {
             String billingCountry = req.getParameter("billing-country");
@@ -52,9 +52,9 @@ public class CheckoutController extends HttpServlet {
             String billingStreet = req.getParameter("billing-street");
             String billingHouseNumber = req.getParameter("billing-house-number");
 
-            orderModel.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
+            order.addBillingAddress(billingCountry, billingState, billingZipCode, billingStreet, billingHouseNumber);
         }
-        orderService.add(orderModel, cartService.getId());
+        orderService.add(order, cartService.getId());
         switch (paymentType) {
             case "paypal":
                 resp.sendRedirect("checkout/payment/paypal");
