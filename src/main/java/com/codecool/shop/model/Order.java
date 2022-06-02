@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class Order {
             billingHouseNumber;
     private final Map<Integer, Integer> cartItemIdsWithQuantity;
     private final BigDecimal totalPrice;
+    private final Currency currency;
     private final Date date;
     private OrderStatusTypes orderStatus;
 
@@ -66,6 +68,7 @@ public class Order {
         this.id = cart.getId().toString();
         this.cartItemIdsWithQuantity = cart.getCartItemIdsWithQuantity();
         this.totalPrice = cart.getTotalPrice();
+        currency = cart.getCurrency();
         date = new Date();
         this.orderStatus = orderStatus;
     }
